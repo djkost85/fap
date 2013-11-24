@@ -81,13 +81,13 @@ class Model_Video extends Model
         #if (!$VideosByOneDay) {
 
             if (!$condition) {
-                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title')
+                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview')
                 ->from('videos')
                 ->execute()
                 ->as_array();
             }
             else {
-                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title')
+                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview')
                     ->from('videos')
                     ->where($condition['where'], '=', $condition['parameter'])
                     ->execute()
