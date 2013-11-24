@@ -153,7 +153,7 @@ $.fn.like = function(){
 				if(self.hasClass("state_active")) self.update(-1);
 				else self.update(1, true);
 
-				return true;
+				return false;
 			}
 		})
 
