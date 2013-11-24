@@ -152,11 +152,16 @@ $.fn.like = function(){
 
 		self.on({
 			'click': function(){
-				$.getJSON(url, { ajax: true }, function(data){
 
-					if(data.status) self.update(data.count, true);
-					else self.update(data.count);
-				})
+				$.ajax({
+					url: url,s
+					data: { ajax: true },
+					dataType: 'json'
+					success: function(data){
+						if(data.status) self.update(data.count, true);
+						else self.update(data.count);
+					}
+				});
 
 				return false;
 			}
