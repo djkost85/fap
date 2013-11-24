@@ -13,20 +13,17 @@ class Model_Like extends Model
         if ( $data['likes'] ) {
 
             $users = unserialize($data['users_likes']);
-
+            
             foreach ($users as $u) {
                 
                 # remove like to video
-                if ($u == $user->id) {
+                if ($u == (int) $user->id) {
                     $num = current( array_keys($users, $user->id) );
                     
 
                     unset( $users[$num] );
-                    $like_num = count($users);
+                    $like_num = $data['likes'] - 1;
                     $users = serialize($users);
-
-                    var_dump($users);
-                    die();
 
                     # laykov ne ostalos'
                     if ( !$users ) {
@@ -42,23 +39,23 @@ class Model_Like extends Model
                     if ($status) return true;
                     else return false;
                 }
-                # add like to video (users est')
-                else {
-                    $users[] = $uid;
-                    $users = array_unique($users);
-                    $users = serialize($users);
-                    $like_num = count($users);
-
-                    $status = DB::update('videos')->set(array(
-                        'likes' => $like_num,
-                        'users_likes' => $users
-                    ))->where('id', '=', $vid)->execute();
-
-                    if ($status) return true;
-                    else return false;
-
-                }
+                
             }
+
+            # add like to video (users est')
+            # a ego tam net
+            $users[] = $uid;
+            $users = array_unique($users);
+            $users = serialize($users);
+            $like_num = $data['likes'] + 1;
+
+            $status = DB::update('videos')->set(array(
+                'likes' => $like_num,
+                'users_likes' => $users
+            ))->where('id', '=', $vid)->execute();
+
+            if ($status) return true;
+            else return false;
         }
         #net likov
         else {
