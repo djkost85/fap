@@ -157,8 +157,8 @@ $.fn.like = function(){
 					url: url+'&ajax=1',
 					dataType: 'json',
 					success: function(data){
-						if(data.status) self.update(data.count, true);
-						else self.update(data.count);
+						if(data.status) update(data.count, true);
+						else update(data.count);
 					}
 				});
 
@@ -166,7 +166,7 @@ $.fn.like = function(){
 			}
 		})
 
-		self.update = function(newCount, stateActive){
+		function update(newCount, stateActive){
 			count.html(newCount);
 
 			if(stateActive) self.addClass("state_active");
