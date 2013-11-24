@@ -164,7 +164,7 @@ $.fn.like = function(){
 
 				return false;
 			}
-		})
+		});
 
 		function update(newCount, stateActive){
 			count.html(newCount);
@@ -172,5 +172,6 @@ $.fn.like = function(){
 			if(stateActive) self.addClass("state_active");
 			else self.removeClass("state_active");
 		};
+
 	});
 }
