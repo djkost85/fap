@@ -91,9 +91,14 @@ class Controller_Video extends Controller_Base_preDispatch
 
     public function action_add()
     {
-        # $url = Arr::get($_GET, 'url', '');
-        $this->template->additionalClasses[] = 'mainbar_black';
-        $this->template->content = View::factory('templates/add', $this->view);
+        if ( $this->user->id != 0) {
+            $this->template->additionalClasses[] = 'mainbar_black';
+            $this->template->content = View::factory('templates/add', $this->view);
+        }
+        else {
+            $this->redirect();
+        }
+        
     }
 
 }

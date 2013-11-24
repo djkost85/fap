@@ -35,7 +35,8 @@ class Controller_Auth extends Controller_Base_preDispatch
             );
 
             $auth = new Model_Auth();
-            $data = $auth->authVK($data);
+            $token = $auth->getToken($data);
+            $data  = $auth->getVKinfo($token);
  
             # Если в базе нет вообще, добавляем
             if ($user = $this->user->hasUniqueUsername($data->uid)) {

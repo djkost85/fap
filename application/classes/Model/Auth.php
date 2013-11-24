@@ -2,19 +2,22 @@
 
 class Model_Auth extends Model
 {
-    function authVK($data) {
+    function getToken( $data ) {
 
         $url = "https://oauth.vk.com/access_token?"
-                ."client_id=".         $data['client_id']
-                ."&client_secret=".    $data['client_secret']
-                ."&code=".             $data['code']
-                ."&redirect_uri=".     $data['redirect_uri']
-                ."&";
+            ."client_id=".         $data['client_id']
+            ."&client_secret=".    $data['client_secret']
+            ."&code=".             $data['code']
+            ."&redirect_uri=".     $data['redirect_uri']
+            ."&";
 
         $user = json_decode(file_get_contents($url));
+        
+        return $user;
+    }
 
-        // [access_token] => 0ce89b9df46 [expires_in] => 86400 [user_id] => 40474063 ) 
-
+    function getVKinfo( $user ) {
+ 
         $url = "https://api.vk.com/method/users.get?"
             . "uid=" .               $user->user_id
             . "&access_token=" .     $user->access_token
