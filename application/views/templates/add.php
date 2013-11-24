@@ -22,8 +22,9 @@
 					<label class="form_group_label" for="add_field_studio">Студия</label>
 					<div class="form_group_controls">
 						<select name="studio" id="add_field_studio">
-							<option value="0">x-art</option>
-							<option value="1">joumi</option>
+							<? foreach ($studios as $studio): ?>
+							<option value="<?= $studio['id'] ?>"><?= $studio['name'] ?></option>
+                            <? endforeach; ?>
 						</select>
 					</div>
 				</div>
@@ -31,8 +32,9 @@
 					<label class="form_group_label" for="add_field_cat">Категория</label>
 					<div class="form_group_controls">
 						<select name="cat" id="add_field_cat">
-							<option value="0">Straight</option>
-							<option value="1">Lesbian</option>
+							<? foreach ($cats as $cat): ?>
+							<option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
+                            <? endforeach; ?>
 						</select>
 					</div>
 				</div>

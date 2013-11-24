@@ -93,6 +93,10 @@ class Controller_Video extends Controller_Base_preDispatch
     {
         if ( $this->user->id != 0) {
             $this->template->additionalClasses[] = 'mainbar_black';
+
+            $this->view['cats']    = $this->template->cats;
+            $this->view['studios'] = $this->template->studios;
+            
             $this->template->content = View::factory('templates/add', $this->view);
         }
         else {
