@@ -2,7 +2,8 @@
 
 class Model_Like extends Model
 {
-    function likeVideo($uid, $vid) {
+    function likeVideo($uid, $vid, $ajax) {
+        $ajax = (int) $ajax;
         $user = new Model_User();
 
         if ( !$uid || !$vid ) return false;
@@ -11,6 +12,7 @@ class Model_Like extends Model
 
         $json['status'] = '';
         $json['count'] = '';
+        $json['ajax'] = $ajax;
 
         # est' liki
         if ( $data['likes'] ) {
