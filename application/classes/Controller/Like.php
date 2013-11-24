@@ -16,9 +16,9 @@ class Controller_Like extends Controller_Base_preDispatch
         }
         else {
         	$Like = new Model_Like();
-        	$status = $Like->likeVideo( $uid, $vid );
+        	$data = $Like->likeVideo( $uid, $vid );
 
-            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') echo $status;
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') return $data;
             else $this->redirect($from);
         }
 

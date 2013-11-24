@@ -9,18 +9,20 @@ class Model_Like extends Model
 
         $data = current( DB::select('likes', 'users_likes')->from('videos')->where('id', '=', $vid)->execute()->as_array() );
 
+        $json['status'] = '';
+        $json['count'] = '';
+
         # est' liki
         if ( $data['likes'] ) {
 
             $users = unserialize($data['users_likes']);
-            
+
             foreach ($users as $u) {
                 
                 # remove like to video
                 if ($u == (int) $user->id) {
                     $num = current( array_keys($users, $user->id) );
                     
-
                     unset( $users[$num] );
                     $like_num = $data['likes'] - 1;
                     $users = serialize($users);
@@ -36,8 +38,11 @@ class Model_Like extends Model
                         'users_likes' => $users
                     ))->where('id', '=', $vid)->execute();
 
-                    if ($status) return true;
-                    else return false;
+                    $json = (object) $json;
+                    $json->status = $status;
+                    $json->count  = $like_num;
+
+                    return $json;
                 }
                 
             }
@@ -54,8 +59,11 @@ class Model_Like extends Model
                 'users_likes' => $users
             ))->where('id', '=', $vid)->execute();
 
-            if ($status) return true;
-            else return false;
+            $json = (object) $json;
+            $json->status = $status;
+            $json->count  = $like_num;
+
+            return $json;
         }
         #net likov
         else {
@@ -68,8 +76,11 @@ class Model_Like extends Model
                 'users_likes' => $users
             ))->where('id', '=', $vid)->execute();
 
-            if ($status) return true;
-            else return false;
+            $json = (object) $json;
+            $json->status = $status;
+            $json->count  = '1';
+
+            return $json;
         }
         
 
