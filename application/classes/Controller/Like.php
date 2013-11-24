@@ -1,7 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Like extends Controller_Base_preDispatch
+class Controller_Like extends Controller_Template
 {
+    public $template = 'ajax';
 
     public function action_index()
     {
@@ -20,7 +21,9 @@ class Controller_Like extends Controller_Base_preDispatch
         	$Like = new Model_Like();
         	$data = $Like->likeVideo( $uid, $vid, $ajax );
 
-            if ( $data->ajax ) echo json_encode($data);
+            if ( $ajax ) {
+                $this->template->data = $data;
+            }
             else $this->redirect($from);
         }
 

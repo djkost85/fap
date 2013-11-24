@@ -44,7 +44,7 @@ class Model_Like extends Model
                     $json->status = $status;
                     $json->count  = $like_num;
 
-                    return $json;
+                    return json_encode($json);
                 }
                 
             }
@@ -65,7 +65,7 @@ class Model_Like extends Model
             $json->status = $status;
             $json->count  = $like_num;
 
-            return $json;
+            return json_encode($json);
         }
         #net likov
         else {
@@ -82,7 +82,7 @@ class Model_Like extends Model
             $json->status = $status;
             $json->count  = '1';
 
-            return $json;
+            return json_encode($json);
         }
         
 
