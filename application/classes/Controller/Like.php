@@ -20,7 +20,7 @@ class Controller_Like extends Controller_Base_preDispatch
         	$Like = new Model_Like();
         	$data = $Like->likeVideo( $uid, $vid, $ajax );
 
-            if ( $data->ajax ) return $data;
+            if ( $data->ajax ) echo json_encode($data);
             else $this->redirect($from);
         }
 
