@@ -1,0 +1,8 @@
+.icon,
+.icon_weather {
+	background: url(../img/sprite.png) no-repeat;
+	vertical-align: middle;
+	
+	display: inline-block;
+	position: relative;
+}
