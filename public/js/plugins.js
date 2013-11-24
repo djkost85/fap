@@ -146,12 +146,14 @@ $.fn.tagit = function(){
 $.fn.like = function(){
 	return this.each(function(){
 		var self = $(this);
-		var url = self.attr('url');
+		
+		var url = self.attr('href');
 		var count = $(".like_button_count", self);
 
 		self.on({
 			'click': function(){
-				$.getJSON(url, {}, function(data){
+				$.getJSON(url, { ajax: true }, function(data){
+
 					if(data.status) self.update(data.count, true);
 					else self.update(data.count);
 				})
