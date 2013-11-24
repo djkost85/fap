@@ -22,12 +22,12 @@
 		<a href="/view/<?= URL::title($video['title']) ?>" class="post_item_outer">
 			<div class="post_item_inner">
 				<div class="post_item_title"><?= $video['title'] ?></div>
-				<div class="post_item_actors">
+				<div class="post_item_actors">with 
 					<? foreach ($video['actors'] as $actor): ?>
-						<?= $actor ?>
+						<?= $actor ?>,
 					<? endforeach; ?>
 				</div>
-				<div class="post_item_likes"><?= $video['likes'] ?></div>
+				<div class="post_item_likes"><i class="fa fa-heart"></i> <?= $video['likes'] ?></div>
 			</div>
 		</a>
 	</div><!-- post item -->
