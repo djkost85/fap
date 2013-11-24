@@ -156,7 +156,7 @@ $.fn.like = function(){
 				$.ajax({
 					url: url,
 					data: { ajax: true },
-					dataType: 'json'
+					dataType: 'json',
 					success: function(data){
 						if(data.status) self.update(data.count, true);
 						else self.update(data.count);
