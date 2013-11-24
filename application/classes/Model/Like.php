@@ -2,13 +2,15 @@
 
 class Model_Like extends Model
 {
-    function likeVideo($uid, $vid, $ajax) {
+    function like($uid, $vid, $type, $ajax) {
         $ajax = (int) $ajax;
+        $type = htmlspecialchars($type);
+
         $user = new Model_User();
 
         if ( !$uid || !$vid ) return false;
 
-        $data = current( DB::select('likes', 'users_likes')->from('videos')->where('id', '=', $vid)->execute()->as_array() );
+        $data = current( DB::select('likes', 'users_likes')->from( $type )->where('id', '=', $vid)->execute()->as_array() );
 
         $json['status'] = '';
         $json['count'] = '';
@@ -35,7 +37,7 @@ class Model_Like extends Model
                         $like_num = '0';
                     }
 
-                    $status = DB::update('videos')->set(array(
+                    $status = DB::update( $type )->set(array(
                         'likes' => $like_num,
                         'users_likes' => $users
                     ))->where('id', '=', $vid)->execute();
@@ -56,7 +58,7 @@ class Model_Like extends Model
             $users = serialize($users);
             $like_num = $data['likes'] + 1;
 
-            $status = DB::update('videos')->set(array(
+            $status = DB::update( $type )->set(array(
                 'likes' => $like_num,
                 'users_likes' => $users
             ))->where('id', '=', $vid)->execute();
@@ -73,7 +75,7 @@ class Model_Like extends Model
             $users = array_unique($users);
             $users = serialize($users);
 
-            $status = DB::update('videos')->set(array(
+            $status = DB::update( $type )->set(array(
                 'likes' => '1',
                 'users_likes' => $users
             ))->where('id', '=', $vid)->execute();

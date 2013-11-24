@@ -26,7 +26,7 @@
 			<div class="post_views">Просмотров: <b><?= $video['views'] ?></b></div>
 			<div class="post_likes">
 			<? if ( $user->id != 0 ): ?>
-				<a href="/like-it?type=video&uid=<?= $user->id ?>&vid=<?= $video['id'] ?>&from=<?= $_SERVER['REQUEST_URI'] ?>" class="like_button <?= $video['user_like_it_early'] ? 'state_active' : '' ?>">
+				<a href="/like-it?type=videos&uid=<?= $user->id ?>&vid=<?= $video['id'] ?>&from=<?= $_SERVER['REQUEST_URI'] ?>" class="like_button <?= $video['user_like_it_early'] ? 'state_active' : '' ?>">
 					<span class="like_button_wrap">Мне нравится <i class="fa fa-heart"></i></span>
 					<span class="like_button_count"><?= $video['likes'] ?></span>
 				</a>
