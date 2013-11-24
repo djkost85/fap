@@ -21,7 +21,7 @@
 
 	<div class="post_item span4">
 		<div class="post_item_image">
-			<img src="/public/img/post1.jpg" alt="">
+			<img src="<?= $video['img_preview'] ?>" alt="">
 		</div>
 		<a href="/view/<?= $video['url_title'] ?>" class="post_item_outer">
 			<div class="post_item_inner">
