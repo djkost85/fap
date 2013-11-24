@@ -154,7 +154,7 @@ $.fn.like = function(){
 			'click': function(){
 
 				$.ajax({
-					url: url,s
+					url: url,
 					data: { ajax: true },
 					dataType: 'json'
 					success: function(data){
