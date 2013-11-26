@@ -81,6 +81,8 @@ $.fn.tagit = function(){
 		var choice = $(".tagit_choice", self);
 		var value = $(".tagit_value", self);
 
+		
+
 		self.on({
 			'click': function(){
 				add.find("input").focus();
@@ -100,6 +102,14 @@ $.fn.tagit = function(){
 					self.createChoice($(this).val());
 					return false;
 				}
+			},
+			'focus': function(){
+				self.addClass("state_focus")
+			},
+			'blur': function(){
+				if($(this).val() != '') self.createChoice($(this).val());
+				self.stateFocus();
+
 			}
 		}, 'input');
 
@@ -138,7 +148,14 @@ $.fn.tagit = function(){
 			});
 
 			value.val(input);
+		};
+
+		self.stateFocus = function(){
+			if($(".tagit_choice", self).length > 0) self.addClass("state_focus");
+			else self.removeClass("state_focus");
 		}
+
+		self.stateFocus();
 
 	});
 }
@@ -146,32 +163,41 @@ $.fn.tagit = function(){
 $.fn.like = function(){
 	return this.each(function(){
 		var self = $(this);
-		
-		var url = self.attr('href');
 		var count = $(".like_button_count", self);
 
 		self.on({
 			'click': function(){
-
-				$.ajax({
-					url: url+'&ajax=1',
-					dataType: 'json',
-					success: function(data){
-						if(data.status) update(data.count, true);
-						else update(data.count);
-					}
-				});
+				if(self.hasClass("state_active")) self.update(-1);
+				else self.update(1, true);
 
 				return false;
 			}
-		});
+		})
 
-		function update(newCount, stateActive){
-			count.html(newCount);
+		self.update = function(newCount, stateActive){
+			var _count = parseInt(count.html());
+			if(isNaN(_count)) _count = 0;
+			count.html(_count+newCount==0?'':_count+newCount);
 
 			if(stateActive) self.addClass("state_active");
 			else self.removeClass("state_active");
 		};
-
 	});
+};
+
+$.fn.fieldState = function(){
+	return this.each(function(){
+		var self = $(this);
+
+		self.each(function(){
+			if(self.val() != '') self.addClass("state_focus");
+		}).on({
+			'focus': function(){
+				self.addClass("state_focus");
+			},
+			'blur': function(){
+				if(self.val() == '') self.removeClass("state_focus");
+			}
+		})
+	})
 }
