@@ -2,13 +2,13 @@
 	<div class="page_title">Добавление порно-ролика</div>
 </div><!-- page head -->
 <div class="page_body">
-	<form class="form" action="#">
+	<form class="form" action="/add" method="post">
 		<div class="form_group form_group_featured">
 			<label class="form_group_label" for="add_field_url">Ссылка видео в Вконтакте</label>
 			<div class="form_group_controls span8">
 				<input type="text" name="url" placeholder="Введите url или iframe ссылку" id="add_field_url">
 			</div>
-			<div class="form_group_descript">Пример: &lt;iframe src="https://vk.com/video_ext.php?oid=-52204656&amp;id=165087796hd=3" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
+			<div class="form_group_descript">Пример: &lt;iframe src="http://vk.com/video_ext.php?oid=148132435&amp;id=166891820&amp;hash=f178771efbfcbb62&amp;hd=2" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
 		</div><!-- control group -->
 		<div class="form_group">
 			<label class="form_group_label" for="add_field_name">Название видео</label>
@@ -58,18 +58,6 @@
 			<div class="form_group_controls span8">
 				<div class="tagit clearfix">
 					<ul class="tagit_list">
-						<li class="tagit_choice">
-							<span class="tag state_be_removed">creampie</span>
-						</li>
-						<li class="tagit_choice">
-							<span class="tag state_be_removed">creampie</span>
-						</li>
-						<li class="tagit_choice">
-							<span class="tag state_be_removed">creampie</span>
-						</li>
-						<li class="tagit_choice">
-							<span class="tag state_be_removed">creampie</span>
-						</li>
 						<li class="tagit_add">
 							<input type="text" name="" id="add_field_tags" maxlength="50">
 						</li>
@@ -83,6 +71,7 @@
 				<button type="submit" class="btn">Добавить видео</button>
 			</div>
 		</div>
+		<input type="hidden" name="csrf" value="<?= Security::token(); ?>">
 	</form>
 </div><!-- page body -->
 	

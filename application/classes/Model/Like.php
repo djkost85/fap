@@ -12,7 +12,7 @@ class Model_Like extends Model
 
         $data = current( DB::select('likes', 'users_likes')->from( $type )->where('id', '=', $vid)->execute()->as_array() );
 
-        $json['status'] = '';
+        $json['status'] = false;
         $json['count'] = '';
         $json['ajax'] = $ajax;
 
@@ -43,7 +43,7 @@ class Model_Like extends Model
                     ))->where('id', '=', $vid)->execute();
 
                     $json = (object) $json;
-                    $json->status = $status;
+                    $json->status = false;
                     $json->count  = $like_num;
 
                     return json_encode($json);
@@ -64,7 +64,7 @@ class Model_Like extends Model
             ))->where('id', '=', $vid)->execute();
 
             $json = (object) $json;
-            $json->status = $status;
+            $json->status = true;
             $json->count  = $like_num;
 
             return json_encode($json);
@@ -81,7 +81,7 @@ class Model_Like extends Model
             ))->where('id', '=', $vid)->execute();
 
             $json = (object) $json;
-            $json->status = $status;
+            $json->status = true;
             $json->count  = '1';
 
             return json_encode($json);
