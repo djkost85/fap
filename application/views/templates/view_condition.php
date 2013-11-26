@@ -19,7 +19,7 @@
 <div class="row page_body" id="content">
 
 <? if ($videos_error): ?>
-	<p class="error"><?= $videos_error_text ?></p>
+	<div class="span12 error"><?= $videos_error_text ?></div>
 <? else: ?>
 	
 	<? foreach ($videos as $video): ?>
