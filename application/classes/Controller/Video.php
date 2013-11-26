@@ -125,23 +125,28 @@ class Controller_Video extends Controller_Base_preDispatch
 
                     # check url
                     $pattern_iframe = '/http(s?):\/\/vk.com\/[A-Za-z_.?]*oid=([-\d]*)?&id=([\d]*)?(&hash=[A-Za-z\d]*)?(&hd=[\d])?/';
-                    $pattern_normal = '/http(s?):\/\/vk.com\/[\S\d]*video([\d]*)?_([\d]*)?/';
+                    $pattern_normal = '/http(s?):\/\/vk.com\/[\S\d]*video([-\d]*)?_([\d]*)?/';
                     
                     $pattern_iframe = htmlspecialchars($pattern_iframe);
                     $pattern_normal = htmlspecialchars($pattern_normal);
 
                     $status = preg_match($pattern_iframe, $url, $matches);
-
+                    
                     if ( $status ) {
 
-                        $data = array(
-                            'url' => $matches[0],
-                            'ssh' => $matches[1],
-                            'uid' => $matches[2],
-                            'vid' => $matches[3],
-                            'hash'=> preg_replace('/&amp;hash=/', '', $matches[4]),
-                            'hd'  => preg_replace('/&amp;hd=/', '', $matches[5])
-                        ); 
+                        # auto form array from parameters
+                        $count  = count($matches);
+
+                        $i = 0;
+                        while ( $i < $count - 1 ) {
+                            if ( isset($matches[$i])   ) $data['url'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['ssh'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['uid'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['vid'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['hash']= preg_replace('/&amp;hash=/', '', $matches[$i]);
+                            if ( isset($matches[++$i]) ) $data['hd']  = preg_replace('/&amp;hd=/', '', $matches[$i]);
+                        }
+
 
                         echo "<pre>";
                         var_dump($data);
@@ -154,12 +159,17 @@ class Controller_Video extends Controller_Base_preDispatch
 
                     if ( $status ) {
 
-                        $data = array(
-                            'url' => $matches[0],
-                            'ssh' => $matches[1],
-                            'uid' => $matches[2],
-                            'vid' => $matches[3]
-                        ); 
+
+                        # auto form array from parameters
+                        $count  = count($matches);
+
+                        $i = 0;
+                        while ( $i < $count - 1 ) {
+                            if ( isset($matches[$i])   ) $data['url'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['ssh'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['uid'] = $matches[$i];
+                            if ( isset($matches[++$i]) ) $data['vid'] = $matches[$i];
+                        }
 
                         echo "<pre>";
                         var_dump($data);
