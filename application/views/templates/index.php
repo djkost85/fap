@@ -1,5 +1,6 @@
 <div class="filter">
 	<div class="row">
+	
 		<div class="span9 filter_search clearfix">
 			<div class="filter_search_field">
 				<form action="#">
@@ -8,6 +9,7 @@
 			</div>
 			<div class="filter_search_title"></div>
 		</div>
+
 		<div class="span3 filter_sort">
 			<select name="filter_sort">
 				<option value="0">Сортируем по рейтингу</option>

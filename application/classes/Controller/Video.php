@@ -63,7 +63,7 @@ class Controller_Video extends Controller_Base_preDispatch
 
         if (!$videos) {
             $this->view['videos_error'] = true;
-            $this->view['videos_error_text'] = 'Видео не найдены';
+            $this->view['videos_error_text'] = 'В этом разделе пока пусто, нам тоже от этого очень грустно..';
         }
         else {
             $this->view['videos'] = $videos;
@@ -75,6 +75,9 @@ class Controller_Video extends Controller_Base_preDispatch
 
     public function action_view()
     {
+        # show search widget in sidebar
+        $this->template->catalog = true;
+
         $title = $this->request->param('video_title', '');
 
         $Model = new Model_Video();
@@ -91,6 +94,9 @@ class Controller_Video extends Controller_Base_preDispatch
 
     public function action_add()
     {
+        # show search widget in sidebar
+        $this->template->catalog = true;
+
         if ( $this->user->id != 0) {
             $this->template->additionalClasses[] = 'mainbar_black';
 

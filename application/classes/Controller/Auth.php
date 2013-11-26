@@ -5,6 +5,9 @@ class Controller_Auth extends Controller_Base_preDispatch
 
     public function action_index()
     {
+        # show search widget in sidebar
+        $this->template->catalog = true;
+        
         $this->template->additionalClasses[] = 'mainbar_black';
         $this->template->content = View::factory('templates/auth', $this->view);
     }

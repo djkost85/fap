@@ -46,11 +46,14 @@
 				</div>
 				<? endif;  ?>
 				
-				<?/*<div class="widget widget_search">
+				<? if ( $catalog ): ?>
+				<div class="widget widget_search">
 					<form action="#">
 						<input type="search" name="" placeholder="Поиск" tabindex="1">
 					</form>
-				</div>*/?>
+				</div>
+				<? endif;?>
+
 				<div class="widget widget_noborder widget_nav">
 					<ul>
 						<? foreach ($studios as $studio): ?>
