@@ -51,7 +51,7 @@
 						<input type="search" name="" placeholder="Поиск" tabindex="1">
 					</form>
 				</div>*/?>
-				<div class="widget widget_nav">
+				<div class="widget widget_noborder widget_nav">
 					<ul>
 						<? foreach ($studios as $studio): ?>
 							<li <?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "class='state_active'" : ""  ?>><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
