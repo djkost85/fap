@@ -28,14 +28,14 @@
 		<div class="post_item_image">
 			<a href="/view/<?= $video['url_title'] ?>" class="fa fa-play">
 				<img src="<?= $video['img_preview'] ?>" alt="">
-				<div class="post_item_duration">46:20</div>
+				<div class="post_item_duration"><?= $video['duration'] ?></div>
 			</a>
 		</div>
 		<div class="post_item_title">
 			<a href="/view/<?= $video['url_title'] ?>"><?= $video['title'] ?></a>
 		</div>
 		<ul class="post_item_info">
-			<li class="post_item_views">12,000 views</li>
+			<li class="post_item_views"><?= $video['views'] ?> views</li>
 			<li class="post_item_date">4 hours ago</li>
 		</ul>
 	</div><!-- post item -->

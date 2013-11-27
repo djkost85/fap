@@ -75,6 +75,9 @@ class Controller_Video extends Controller_Base_preDispatch
 
     public function action_view()
     {
+        $this->view['videos_error'] = false;
+        $this->view['videos_error_text'] = '';
+
         # show search widget in sidebar
         $this->template->catalog = true;
 
@@ -83,13 +86,20 @@ class Controller_Video extends Controller_Base_preDispatch
         $Model = new Model_Video();
         $video = $Model->getVideoByTitle($title);
 
-        $Tweak = new Model_Tweak();
+        if (!$video) {
+            $this->view['videos_error'] = true;
+            $this->view['videos_error_text'] = 'Видео не найдено';
+        }
+        else {
+            $Tweak = new Model_Tweak();
 
-        $video['date']   = nl2br($Tweak->rusDate("j M Y", strtotime( $video['date'] ) ));
-
-        $this->view['video'] = $video;
-
+            $video['date']   = nl2br($Tweak->rusDate("j M Y", strtotime( $video['date'] ) ));
+            $this->view['video'] = $video;
+            
+        }
         $this->template->content = View::factory('templates/view', $this->view);
+
+        
     }
 
     public function action_add()
@@ -103,23 +113,52 @@ class Controller_Video extends Controller_Base_preDispatch
             $this->view['cats']    = $this->template->cats;
             $this->view['studios'] = $this->template->studios;
 
+            # template
+            $this->view['video']['title'] = '';
+            $this->view['video']['url'] = '';
+            $this->view['video']['preview']='';
+            $this->view['video']['actors'] = '';
+            $this->view['video']['tags']='';
+            $this->view['video']['duration']='';
+            $this->view['video']['method'] = false;
+
+            # vk api
+            $data['client_id'] = '3980223';
+            $data['client_secret'] = 'ltCymYO6LwMXUbYN2xHX';
+
             $url = (string) Arr::get($_POST, 'url', '');
             $url = htmlspecialchars($url);
+
+            $csrf   = (string) Arr::get($_POST, 'csrf', '');
+            $title  = (string) Arr::get($_POST, 'title', '');
+            $studio = (int)    Arr::get($_POST, 'studio', '');
+            $cat    = (int)    Arr::get($_POST, 'cat', '');
+            $actors = (string) Arr::get($_POST, 'actors', '');
+            $tags   = (string) Arr::get($_POST, 'tags', '');
+            $ajax   = (bool) Arr::get($_POST, 'ajax', false);
+            $img_preview = (string) Arr::get($_POST, 'img_preview', '');
+            $method = (string) Arr::get($_POST, 'method', '');
+            $duration = (string)    Arr::get($_POST, 'duration', '');
+
+            
+
+            if ( $method == 'save' && Security::check( $csrf ) ) {
+                $actors = explode(',', $actors);
+                $tags   = explode(',', $tags);
+
+                $url_title = URL::title($title);
+
+                $video = new Model_Video();
+                $status = $video->save($url, $title, $url_title, $studio, $cat, $actors, $tags, $img_preview, $duration);
+
+                if ($status) $this->redirect();
+                else die('add_error');
+            }
 
             # user add video by url
             if ($url) {
 
-                $csrf   = (string) Arr::get($_POST, 'csrf', '');
-                $title  = (string) Arr::get($_POST, 'title', '');
-                $studio = (int)    Arr::get($_POST, 'studio', '');
-                $cat    = (int)    Arr::get($_POST, 'cat', '');
-                $actors = (string) Arr::get($_POST, 'actors', '');
-                $tags   = (string) Arr::get($_POST, 'tags', '');
-
-                # expand ","
                 if ( Security::check( $csrf ) ) {
-                    $actors = explode(',', $actors);
-                    $tags   = explode(',', $tags);
 
                     $url_title = URL::title( $title );
 
@@ -147,10 +186,34 @@ class Controller_Video extends Controller_Base_preDispatch
                             if ( isset($matches[++$i]) ) $data['hd']  = preg_replace('/&amp;hd=/', '', $matches[$i]);
                         }
 
+                        $user = new Model_User();
+                        $vk = new Model_VK( $data['client_id'], $data['client_secret'], $user->getToken() );
+                        
+                        $video_info = $vk->api('video.get', array(
+                            'owner_id'   => $data['uid'],
+                            'videos'     => $data['uid'].'_'.$data['vid'],
+                        ));
 
-                        echo "<pre>";
-                        var_dump($data);
-                        exit();
+                        if ( $ajax ) {
+                            $data = json_encode($video_info['response'][1]);
+                            echo $data;
+                            exit();
+                        }
+                        else {
+                            # go to /add page and put info in fields
+                            $this->view['video']['url'] = $video_info['response'][1]['player'];
+                            $this->view['video']['title'] = $video_info['response'][1]['title'];
+                            $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
+                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
+                            $this->view['video']['actors'] = $actors;
+                            $this->view['video']['tags'] = $tags;
+
+                            $this->view['video']['method'] = 'save';
+
+                            $this->template->content = View::factory('templates/add', $this->view);
+
+                            return;
+                        }
 
                     }
 
@@ -158,7 +221,6 @@ class Controller_Video extends Controller_Base_preDispatch
                     $status = preg_match($pattern_normal, $url, $matches);
 
                     if ( $status ) {
-
 
                         # auto form array from parameters
                         $count  = count($matches);
@@ -171,10 +233,33 @@ class Controller_Video extends Controller_Base_preDispatch
                             if ( isset($matches[++$i]) ) $data['vid'] = $matches[$i];
                         }
 
-                        echo "<pre>";
-                        var_dump($data);
-                        exit();
-                    
+                        $user = new Model_User();
+                        $vk = new Model_VK( $data['client_id'], $data['client_secret'], $user->getToken() );
+                        
+                        $video_info = $vk->api('video.get', array(
+                            'owner_id'   => $data['uid'],
+                            'videos'     => $data['uid'].'_'.$data['vid'],
+                        ));
+
+                        if ( $ajax ) {
+                            $data = json_encode($video_info['response'][1]);
+                            echo $data;
+                            exit();
+                        }
+                        else {
+                            # go to /add page and put info in fields
+                            $this->view['video']['url'] = $video_info['response'][1]['player'];
+                            $this->view['video']['title'] = $video_info['response'][1]['title'];
+                            $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
+                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
+                            $this->view['video']['actors'] = $actors;
+                            $this->view['video']['tags'] = $tags;
+
+                            $this->view['video']['method'] = 'save';
+                            $this->template->content = View::factory('templates/add', $this->view);
+                            
+                            return;
+                        }                    
                     }
 
                     

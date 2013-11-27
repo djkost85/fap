@@ -3,17 +3,20 @@
 </div><!-- page head -->
 <div class="page_body">
 	<form class="form" action="/add" method="post">
+
 		<div class="form_group form_group_featured">
 			<label class="form_group_label" for="add_field_url">Ссылка видео в Вконтакте</label>
 			<div class="form_group_controls span8">
-				<input type="text" name="url" placeholder="Введите url или iframe ссылку" id="add_field_url">
+				<input type="text" name="url" placeholder="Введите url или iframe ссылку" id="add_field_url" value="<?= $video['url'] ?>">
 			</div>
-			<div class="form_group_descript">Пример: &lt;iframe src="http://vk.com/video_ext.php?oid=148132435&amp;id=166891820&amp;hash=f178771efbfcbb62&amp;hd=2" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
+			<div class="form_group_descript">Пример: &lt;iframe src="http://vk.com/video_ext.php?oid=183231915&amp;id=166697716&amp;hash=dad7aec1391585ea&amp;hd=2" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
 		</div><!-- control group -->
+
+		<? if ($video['method']): ?>
 		<div class="form_group">
 			<label class="form_group_label" for="add_field_name">Название видео</label>
 			<div class="form_group_controls span8">
-				<input type="text" name="name" placeholder="" id="add_field_name">
+				<input type="text" name="title" placeholder="" id="add_field_name" value="<?= $video['title'] ?>">
 			</div>
 		</div><!-- control group -->
 		<div class="form_group">
@@ -49,7 +52,7 @@
 							<input type="text" id="add_field_actors" maxlength="50">
 						</li>
 					</ul>
-					<input type="hidden" class="tagit_value" name="actors">
+					<input type="hidden" class="tagit_value" name="actors" value="">
 				</div>
 			</div>
 		</div><!-- control group -->
@@ -62,10 +65,17 @@
 							<input type="text" name="" id="add_field_tags" maxlength="50">
 						</li>
 					</ul>
-					<input type="hidden" class="tagit_value" name="tags">
+					<input type="hidden" class="tagit_value" name="tags" value="">
 				</div>
 			</div>
 		</div><!-- control group -->
+
+		<?= $video['preview'] ? '<img src="'.$video['preview'].'"><input type="hidden" name="img_preview" value="'.$video['preview'].'">' : '' ?>
+		<?= $video['method'] ? '<input type="hidden" name="method" value="'.$video['method'].'">' : '' ?>
+	    <?= $video['duration'] ? '<input type="hidden" name="duration" value="'.$video['duration'].'">' : '' ?>
+		
+		<? endif; ?>
+
 		<div class="form_actions">
 			<div class="form_group_controls span3">
 				<button type="submit" class="btn">Добавить видео</button>
