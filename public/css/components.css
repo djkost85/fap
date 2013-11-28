@@ -149,7 +149,6 @@
 
 .post {}
 	.post_thumbnail {
-		height: 572px;
 		margin: 0 -20px 20px;
 	}
 	.post_main {}
@@ -186,9 +185,12 @@
 	/* post item */
 
 	.post_item {
-		height: 200px;
-		position: relative;
+		width: 229px; height: 200px;
+
+		float: left;
 		overflow: hidden;
+		position: relative;
+		margin: 0 0 0 20px;
 	}
 		.post_item_image {
 			height: 130px;

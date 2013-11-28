@@ -6,6 +6,7 @@
 }
 
 .logo {
+	background: #121212;
 	width: 80px; height: 100%;
 
 	position: fixed;
@@ -47,24 +48,21 @@
 		}
 
 .sidebar {
-	background: #1f1f1f;
-	width: 220px; min-height: 100%;
+	width: 220px; height: 100%;
 
-	-webkit-box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.75);
-	-moz-box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.75);
-	box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.75);
-
-	position: fixed;
+	position: absolute;
 	top: 0; left: 80px;
 }
 
 .mainbar {
 	background: #fff;
-	width: 1016px; min-height: 100%;
+	max-width: 1016px; min-height: 100%;
 
+	overflow: hidden;
 	padding: 0 20px 20px;
 	position: relative; z-index: 3;
 }
+
 .mainbar_black {
 	background: #000;
 }
@@ -110,44 +108,55 @@
 .row .span11,
 .row .span12 {
 	float: left;
-	margin-left: 20px;
+	padding-left: 20px;
+}
+
+.span12 {
+  width: 100%;
+}
+
+.span11 {
+  width: 91.66666666666666%;
+}
+
+.span10 {
+  width: 83.33333333333334%;
+}
+
+.span9 {
+  width: 75%;
+}
+
+.span8 {
+  width: 66.66666666666666%;
+}
+
+.span7 {
+  width: 58.333333333333336%;
+}
+
+.span6 {
+  width: 50%;
+}
+
+.span5 {
+  width: 41.66666666666667%;
+}
+
+.span4 {
+  width: 33.33333333333333%;
+}
+
+.span3 {
+  width: 25%;
+}
+
+.span2 {
+  width: 16.666666666666664%;
 }
 
 .span1 {
-	width: 63px;
-}
-.span2 {
-	width: 146px;
-}
-.span3 {
-	width: 229px;
-}
-.span4 {
-	width: 312px;
-}
-.span5 {
-	width: 395px;
-}
-.span6 {
-	width: 478px;
-}
-.span7 {
-	width: 561px;
-}
-.span8 {
-	width: 644px;
-}
-.span9 {
-	width: 727px;
-}
-.span10 {
-	width: 810px;
-}
-.span11 {
-	width: 893px;
-}
-.span12 {
-	width: 976px;
+  width: 8.333333333333332%;
 }
 
 /* widgets */

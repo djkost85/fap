@@ -22,7 +22,7 @@
 
 	<? foreach ($videos as $video): ?>
 
-	<div class="post_item span3">
+	<div class="post_item">
 		<div class="post_item_image">
 			<a href="/view/<?= $video['url_title'] ?>" class="fa fa-play">
 				<img src="<?= $video['img_preview'] ?>" alt="">

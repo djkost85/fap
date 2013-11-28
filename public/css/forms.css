@@ -160,8 +160,9 @@ input.state_focus,
 /* tagit */
 
 .tagit {
-	padding: 0 10px 5px;
+	height: auto;
 
+	padding: 0 10px 5px;
 	cursor: text;
 }
 	.tagit li {

@@ -17,6 +17,8 @@
 		<link rel="stylesheet" href="/public/css/forms.css">
 		<link rel="stylesheet" href="/public/css/main.css">
 		<link rel="stylesheet" href="/public/css/components.css">
+		<link rel="stylesheet" href="/public/css/responsive.css">
+
 	</head>
 	<body>
 		
