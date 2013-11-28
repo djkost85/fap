@@ -8,7 +8,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Fapalo.ru</title>
 		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=818px, initial-scale=1">
 
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
