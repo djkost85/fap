@@ -10,7 +10,6 @@
 			<div class="row">
 				<div class="span3">
 					<a class="btn btn_grey auth_btn" href="https://oauth.vk.com/authorize?client_id=3980223&scope=video&redirect_uri=http://fuckyouself.dreamowl.ru/login/vk&response_type=code&v=5.4"><i class="fa fa-vk"></i> Vkontakte</a>
-					<!--<button class="btn btn_grey auth_btn"><i class="fa fa-vk"></i> Vkontakte</button>-->
 				</div>
 				<div class="span3">
 					<button class="btn btn_grey auth_btn"><i class="fa fa-facebook"></i>Facebook</button>

@@ -60,7 +60,7 @@ class Model_VK extends Model
         $this->ch = curl_init();
         
         if (!is_null($this->access_token) && !$this->checkAccessToken()) {
-            throw new VKException('Invalide access token.');
+            throw new Exception('Invalide access token.');
         } else {
             $this->auth = true;
         }
