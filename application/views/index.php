@@ -19,6 +19,8 @@
 		<link rel="stylesheet" href="/public/css/components.css">
 		<link rel="stylesheet" href="/public/css/responsive.css">
 
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
 	</head>
 	<body>
 		
@@ -89,8 +91,6 @@
 			</div><!-- mainbar -->
 		</div><!-- layout -->
 
-
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="/public/js/plugins.js"></script>
 		<script src="/public/js/main.js"></script>
 
