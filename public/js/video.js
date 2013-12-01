@@ -3,15 +3,17 @@ function Video(){
 };
 
 Video.prototype = {
-	checkUrl: function(value){
+	checkUrl: function(value, csrf){
 
 		$.ajax({
 			url: '/add',
+			type: 'post',
+			dataType: 'json',
 			data: {
 				'url': value,
-				'method': 'checkUrl'
+				'method': 'checkUrl',
+				'csrf': csrf
 			},
-			dataType: 'json',
 			success: function(data){
 				
 				console.log(data);

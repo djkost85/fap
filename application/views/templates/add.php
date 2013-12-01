@@ -3,24 +3,7 @@
 </div><!-- page head -->
 <div class="page_body">
 	<form class="form" action="/add" method="post">
-
-		<script src="/public/js/video.js"></script>
-		<script>
-
-			$(function(){
-
-				var video = new Video();
-
-				$("#add_field_url").unbind('keypress paste').on({
-					'keyup paste': function(){
-						var obj = $(this);
-						video.checkUrl(obj.val());
-					}
-				})
-			})
-
-		</script>
-
+		<input type="hidden" name="csrf" value="<?= Security::token(); ?>">
 		<div class="form_group form_group_featured">
 			<label class="form_group_label" for="add_field_url">Ссылка видео в Вконтакте</label>
 			<div class="form_group_controls span8">
@@ -28,8 +11,6 @@
 			</div>
 			<div class="form_group_descript">Пример: &lt;iframe src="http://vk.com/video_ext.php?oid=183231915&amp;id=166697716&amp;hash=dad7aec1391585ea&amp;hd=2" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
 		</div><!-- control group -->
-		<input type="hidden" name="csrf" value="<?= Security::token(); ?>">
-
 
 		<? if ($video['method']): ?>
 		<div class="form_group">
@@ -100,6 +81,24 @@
 				<button type="submit" class="btn">Добавить видео</button>
 			</div>
 		</div>
+
+		<script src="/public/js/video.js"></script>
+		<script>
+
+			$(function(){
+
+				var video = new Video();
+
+				$("#add_field_url").unbind('keypress paste').on({
+					'keyup paste': function(){
+						var obj = $(this);
+						video.checkUrl(obj.val(), '<?= Security::token(); ?>');
+					}
+				})
+			})
+
+		</script>
+
 	</form>
 </div><!-- page body -->
 	
