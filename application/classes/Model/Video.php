@@ -146,11 +146,6 @@ class Model_Video extends Model
 
                     }
 
-                    
-                    if ($video['duration'] != '0') {
-                        $video['duration'] = sprintf("%02d:%02d:%02d", (int)($video['duration'] / 3600), (int)(($video['duration'] % 3600) / 60), $video['duration'] % 60);
-                    }
-
                     $row[$count] = $video;
                     $count++;            
                 }
@@ -244,10 +239,11 @@ class Model_Video extends Model
                 }
 
                 
-                 
+                /*
                 if ($q['duration'] != '0') {
                     $q['duration'] = sprintf("%02d:%02d:%02d", (int)($q['duration'] / 3600), (int)(($q['duration'] % 3600) / 60), $q['duration'] % 60);
                 }
+                */
 
 
                 return $q;

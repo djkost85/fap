@@ -135,7 +135,7 @@ class Controller_Video extends Controller_Base_preDispatch
             $cat    = (int)    Arr::get($_POST, 'cat', '');
             $actors = (string) Arr::get($_POST, 'actors', '');
             $tags   = (string) Arr::get($_POST, 'tags', '');
-            $ajax   = (bool) Arr::get($_POST, 'ajax', false);
+            #$ajax   = (bool) Arr::get($_POST, 'ajax', false);
             $img_preview = (string) Arr::get($_POST, 'img_preview', '');
             $method = (string) Arr::get($_POST, 'method', '');
             $duration = (string)    Arr::get($_POST, 'duration', '');
@@ -207,7 +207,15 @@ class Controller_Video extends Controller_Base_preDispatch
                             $this->view['video']['url'] = $video_info['response'][1]['player'];
                             $this->view['video']['title'] = $video_info['response'][1]['title'];
                             $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
+
+                            if ($video_info['response'][1]['duration'] != '0') {
+                                $this->view['video']['duration'] = sprintf("%02d:%02d:%02d", (int)($video_info['response'][1]['duration'] / 3600), (int)(($video_info['response'][1]['duration'] % 3600) / 60), $video_info['response'][1]['duration'] % 60);
+                            }
+                            else {
+                                $video_info['response'][1]['duration'] = '0';
+                            }
+
+                            #$this->view['video']['duration'] = $video_info['response'][1]['duration'];
                             $this->view['video']['actors'] = $actors;
                             $this->view['video']['tags'] = $tags;
 
@@ -254,7 +262,15 @@ class Controller_Video extends Controller_Base_preDispatch
                             $this->view['video']['url'] = $video_info['response'][1]['player'];
                             $this->view['video']['title'] = $video_info['response'][1]['title'];
                             $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
+                            #$this->view['video']['duration'] = $video_info['response'][1]['duration'];
+                            
+                            if ($video_info['response'][1]['duration'] != '0') {
+                                $this->view['video']['duration'] = sprintf("%02d:%02d:%02d", (int)($video_info['response'][1]['duration'] / 3600), (int)(($video_info['response'][1]['duration'] % 3600) / 60), $video_info['response'][1]['duration'] % 60);
+                            }
+                            else {
+                                $video_info['response'][1]['duration'] = '0';
+                            }
+
                             $this->view['video']['actors'] = $actors;
                             $this->view['video']['tags'] = $tags;
 
