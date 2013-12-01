@@ -1,5 +1,7 @@
-application/cache/*
+application/cache/*/*
 application/logs/*
+application\cache\*
+application\logs\*
 .DS_Store
 sftp-config.json
 .idea/.name

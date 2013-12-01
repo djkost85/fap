@@ -28,6 +28,10 @@ class Controller_Base_preDispatch extends Controller_Template {
         # sidebar
         $video = new Model_Video();
         $this->template->additionalClasses = array();
+    
+        # show and hide widgets
+        $this->template->catalog = false;
+
         $this->template->studios = $video->getStudios();
         $this->template->cats    = $video->getCats();
         $this->template->tags    = $video->getTags();

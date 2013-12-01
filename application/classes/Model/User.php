@@ -64,22 +64,23 @@ class Model_User extends Model
     {
         if ( !$data ) return false;
 
-        isset($data->bdate)     ? $data->bdate : $data->bdate = '0'; 
-        isset($data->nickname ) ? $data->nickname : $data->nickname = '';
-        isset($data->sex )      ? $data->sex : $data->sex = 0;
-        isset($data->city )     ? $data->city : $data->city = 0;
-        isset($data->country )  ? $data->country : $data->country = 0;
-        isset($data->timezone ) ? $data->timezone : $data->timezone = NULL;
+        isset($data['bdate'])     ? $data['bdate'] : $data['bdate'] = '0'; 
+        isset($data['nickname'] ) ? $data['nickname'] : $data['nickname'] = '';
+        isset($data['sex'] )      ? $data['sex'] : $data['sex'] = 0;
+        isset($data['city'] )     ? $data['city'] : $data['city'] = 0;
+        isset($data['country'] )  ? $data['country'] : $data['country'] = 0;
+        isset($data['timezone'] ) ? $data['timezone'] : $data['timezone'] = NULL;
+        isset($data['access_token'])?$data['access_token']:$data['access_token'] = NULL;
 
         $fields = array('id_vk', 'nickname', 'first_name', 'last_name', 
             'screen_name', 'sex', 'bdate', 'city', 'country', 
             'timezone', 'photo_50', 'photo_200', 'photo_200_orig',
-            'photo_max', 'photo_max_orig');
+            'photo_max', 'photo_max_orig', 'access_token');
 
-        $values = array($data->uid, $data->nickname, $data->first_name, $data->last_name, 
-            $data->screen_name, $data->sex, $data->bdate, $data->city, $data->country,
-            $data->timezone, $data->photo_50, $data->photo_200, $data->photo_200_orig,
-            $data->photo_max, $data->photo_max_orig);
+        $values = array($data['uid'], $data['nickname'], $data['first_name'], $data['last_name'], 
+            $data['screen_name'], $data['sex'], $data['bdate'], $data['city'], $data['country'],
+            $data['timezone'], $data['photo_50'], $data['photo_200'], $data['photo_200_orig'],
+            $data['photo_max'], $data['photo_max_orig'], $data['access_token']);
 
         $userId = DB::insert('users', $fields)->values($values)->execute();
 
@@ -116,6 +117,15 @@ class Model_User extends Model
 
         if ($save_50 && $save_200) return true;
         else return false;
+    }
+
+    public function getToken() {
+        $q = current( DB::select('access_token')->from('users')->where('id', '=', $this->id)->limit(1)->execute()->as_array() );
+        return $q['access_token'];
+    }
+
+    public function updateToken($uid, $access_token) {
+        $q = DB::update('users')->set(array('access_token' => $access_token))->where('id', '=', $uid)->execute();
     }
 
     /**
