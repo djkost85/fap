@@ -7,8 +7,6 @@
  * @version 0.1.6
  */
  
-#namespace VK;
-
 class Model_VK extends Model
 { 
     /**

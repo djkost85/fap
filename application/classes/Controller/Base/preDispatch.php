@@ -1,10 +1,30 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * The basic controller
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Controller_Base_preDispatch extends Controller_Template {
 
+    /**
+     * Name basic template
+     * @var string
+     */
     public $template = 'index';
-    public $view     = array();
 
+    /**
+     * Include data for show it in template
+     * @var array
+     */
+    public $view = array();
+
+    /**
+     * Before work with data - auth user, set some params
+     *
+     * @return  void
+     */
 	public function before()
 	{
         parent::before();
@@ -46,6 +66,11 @@ class Controller_Base_preDispatch extends Controller_Template {
         }
 	}
 
+    /**
+     * After work with data - add styles and scripts
+     *
+     * @return  void
+     */
     public function after()
     {
         if ( $this->auto_render ){

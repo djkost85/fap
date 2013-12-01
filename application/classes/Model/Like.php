@@ -1,7 +1,22 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * The PHP class for vk.com. Like and Dislike
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Model_Like extends Model
 {
+    /**
+     * Like/dislike video, actor or studio
+     *
+     * @param   integer $uid
+     * @param   integer $vid
+     * @param   string  $type
+     * @param   bool    $ajax
+     * @return  json
+     */
     function like($uid, $vid, $type, $ajax) {
         $ajax = (int) $ajax;
         $type = htmlspecialchars($type);
@@ -86,14 +101,6 @@ class Model_Like extends Model
 
             return json_encode($json);
         }
-        
-
-        
-        
-
-        
-
-
        
     }
 

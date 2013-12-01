@@ -1,8 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Work with videos :D
+ * @author Alexander Demyashev
+ * @license OpenSource
+ */
+
 class Controller_Video extends Controller_Base_preDispatch
 {
-    # default index page
+    /**
+     * Show videos on index
+     */
     public function action_index()
     {
         $videos = new Model_Video();
@@ -13,7 +21,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/index', $this->view);
     }
 
-    # show studio's videos
+    /**
+     * Show videos categored by studio
+     */
     public function action_studio()
     {
         # factory
@@ -43,7 +53,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/view_condition', $this->view);
     }
 
-    # show videos by category
+    /**
+     * Show videos categored by category...wat
+     */
     public function action_category()
     {
         # factory
@@ -73,6 +85,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/view_condition', $this->view);
     }
 
+    /**
+     * Show single video
+     */
     public function action_view()
     {
         $this->view['videos_error'] = false;
@@ -93,7 +108,7 @@ class Controller_Video extends Controller_Base_preDispatch
         else {
             $Tweak = new Model_Tweak();
 
-            $video['date']   = nl2br($Tweak->rusDate("j M Y", strtotime( $video['date'] ) ));
+            $video['date'] = $Tweak->ftime( strtotime($video['date']) );
             $this->view['video'] = $video;
             
         }
@@ -102,6 +117,10 @@ class Controller_Video extends Controller_Base_preDispatch
         
     }
 
+    /**
+     * if js is on, check video_url, use vk.com api video.get, save him to db
+     * else work php and do all same
+     */
     public function action_add()
     {
         # show search widget in sidebar

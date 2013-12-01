@@ -1,17 +1,59 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Users methods
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Model_User extends Model
 {
-    # site
-    public $id          = 0;
-    public $role        = '';   # 0 - user, 1 - moderator, 2 - admin
-    
-    # vk
-    public $vk_id       = 0;
-    public $first_name  = '';   # Alexander
-    public $last_name   = '';   # Demyashev
-    public $photo_50    = '';   # http://vk.com/images/camera_c.gif
+    /**
+     * User id
+     * @var integer
+     */
+    public $id;
 
+    /**
+     * User role
+     * Example: 0 - user, 1 - moderator, 2 - admin
+     * @var integer
+     */
+    public $role;
+    
+    /**
+     * User's id from vk.com
+     * Example: 40474063
+     * @var string
+     */
+    public $vk_id;
+
+    /**
+     * User's firstname from vk.com
+     * Example: Alexander
+     * @var string
+     */
+    public $first_name;
+
+    /**
+     * User's lastname from vk.com
+     * Example: Demyashev
+     * @var string
+     */
+    public $last_name;
+
+    /**
+     * User profile picture from vk.com
+     * Example: http://vk.com/images/camera_c.gif
+     * @var string
+     */
+    public $photo_50;
+
+    /**
+     * Get basic information about user from db by cockie
+     * @param   integer $id
+     * @return  void
+     */
     public function __construct($id = null)
     {
         $uid  = $id ? (int)$id : (int)Cookie::get('uid', 0);
@@ -34,6 +76,12 @@ class Model_User extends Model
         }
     }
 
+    /**
+     * Set auth cockie
+     *
+     * @param   integer $uid
+     * @return  void
+     */
     public function setAuthCookie($uid = null)
     {
         $uid = (int)$uid;
@@ -41,12 +89,24 @@ class Model_User extends Model
         Cookie::set('hr', md5('owL' . $uid . 'rash2x'), Date::MONTH);
     }
 
+    /**
+     * Check: user unique in db?
+     *
+     * @param   integer $id_vk
+     * @return  bool
+     */
     public function hasUniqueUsername($id_vk)
     {
         if ( !DB::select('id')->from('users')->where('id_vk', '=', $id_vk)->execute()->as_array() ) return true;
         return false;
     }
 
+    /**
+     * Delete user by id
+     *
+     * @param   integer $id
+     * @return  bool
+     */
     public function deleteUser($id = NULL)
     {
         $id = (int) $id;
@@ -60,6 +120,12 @@ class Model_User extends Model
         }
     }
 
+    /**
+     * Add new user
+     *
+     * @param   array   $data
+     * @return  bool
+     */
     public function insertNewUser($data)
     {
         if ( !$data ) return false;
@@ -88,14 +154,27 @@ class Model_User extends Model
         return false;
     }
 
+    /**
+     * Get info about user for login
+     *
+     * @param   integer $vk_id
+     * @return  bool
+     */
     public function getUserForLogin($vk_id)
     {
        if (!$vk_id) return null;
        $user = DB::select()->from('users')->where('id_vk', '=', $vk_id)->limit(1)->execute()->as_array();
        if ($user) return current($user);
-       return null;
+       return false;
     }
 
+    /**
+     * Update profile image
+     *
+     * @param   integer $vk_id
+     * @param   array   $images
+     * @return  bool
+     */
     public function updateImg( $vk_id, $images ) {
         if (!$vk_id || !$images) return false;
 
@@ -108,6 +187,13 @@ class Model_User extends Model
             ))->where('id_vk', '=', $vk_id);
     }
 
+    /**
+     * Save profile images on server
+     *
+     * @param   integer $id
+     * @param   array   $images
+     * @return  bool
+     */
     public function saveImgs( $id, $image ) {
         $path_50  = './public/img/user/'.$id.'_50x50.jpg';
         $path_200 = './public/img/user/'.$id.'_200x200.jpg';
@@ -119,20 +205,38 @@ class Model_User extends Model
         else return false;
     }
 
+    /**
+     * Get user token for VK api
+     *
+     * @return  mixed
+     */
     public function getToken() {
         $q = current( DB::select('access_token')->from('users')->where('id', '=', $this->id)->limit(1)->execute()->as_array() );
-        return $q['access_token'];
-    }
-
-    public function updateToken($uid, $access_token) {
-        $q = DB::update('users')->set(array('access_token' => $access_token))->where('id', '=', $uid)->execute();
+       
+        if ($q) return $q['access_token'];
+        else return false;
     }
 
     /**
-    *
-    *   ADMIN FUNCTIONS
-    *
-    */
+     * If user re-login, update him VK api access token 
+     *
+     * @param   integer $uid
+     * @param   string  $access_token
+     * @return  bool
+     */
+    public function updateToken($uid, $access_token) {
+        $q = DB::update('users')->set(array('access_token' => $access_token))->where('id', '=', $uid)->execute();
+
+        if ($q) return true;
+        else return false;
+    }
+
+    /**
+     * Get info about all users
+     *
+     * @param   string  $order_by
+     * @return  array
+     */
     public function getAllUsers( $order_by = 'desc') {
         $q = DB::select('id', 'id_vk', 'first_name', 'last_name', '', 'photo_50')
         ->from('users')
@@ -143,6 +247,12 @@ class Model_User extends Model
         return $q;
     }
 
+    /**
+     * Get info about single user
+     *
+     * @param   integer $id
+     * @return  array
+     */
     public function getUser( $id ) {
         $id = (int) $id;
         if (!$id) return false;

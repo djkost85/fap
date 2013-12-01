@@ -36,7 +36,7 @@
 		</div>
 		<ul class="post_item_info">
 			<li class="post_item_views"><?= $video['views'] ?> views</li>
-			<li class="post_item_date">4 hours ago</li>
+			<li class="post_item_date"><?= $video['date'] ?></li>
 		</ul>
 	</div><!-- post item -->
 
