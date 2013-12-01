@@ -155,6 +155,8 @@ class Controller_Video extends Controller_Base_preDispatch
                 else die('add_error');
             }
 
+
+
             # user add video by url
             if ($url) {
 
@@ -194,7 +196,8 @@ class Controller_Video extends Controller_Base_preDispatch
                             'videos'     => $data['uid'].'_'.$data['vid'],
                         ));
 
-                        if ( $ajax ) {
+
+                        if ( $method == 'checkUrl' ) {
                             $data = json_encode($video_info['response'][1]);
                             echo $data;
                             exit();
@@ -241,7 +244,7 @@ class Controller_Video extends Controller_Base_preDispatch
                             'videos'     => $data['uid'].'_'.$data['vid'],
                         ));
 
-                        if ( $ajax ) {
+                        if ( $method == 'checkUrl' ) {
                             $data = json_encode($video_info['response'][1]);
                             echo $data;
                             exit();

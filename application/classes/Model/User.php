@@ -125,7 +125,7 @@ class Model_User extends Model
     }
 
     public function updateToken($uid, $access_token) {
-        return DB::update('users')->set(array('access_token' => $access_token))->where('id', '=', $uid);
+        $q = DB::update('users')->set(array('access_token' => $access_token))->where('id', '=', $uid)->execute();
     }
 
     /**
