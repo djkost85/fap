@@ -16,9 +16,9 @@ Video.prototype = {
 			},
 			success: function(data){
 				if(data.status) {
-					$("#add_field_name").val(data.name);
-					$("#add_field_image").attr('src', data.photo_320);
-					$("#add_field_duration").val(data.duration);
+					$("#add_field_name").val(data.title).focus();
+					$("#add_field_image").attr('src', data.image_medium);
+					$("#add_field_duration").text(data.duration);
 
 					$(".form_group").removeClass("state_hide");
 				}

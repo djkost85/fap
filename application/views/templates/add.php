@@ -3,7 +3,10 @@
 </div><!-- page head -->
 <div class="page_body">
 	<form class="form" action="/add" method="post">
+
+		<input type="hidden" name="method" value="save">
 		<input type="hidden" name="csrf" value="<?= Security::token(); ?>" required>
+
 		<div class="form_group form_group_featured">
 			<label class="form_group_label" for="add_field_url">Ссылка видео в Вконтакте</label>
 			<div class="form_group_controls span8">
@@ -12,11 +15,10 @@
 			<div class="form_group_descript">Пример: &lt;iframe src="http://vk.com/video_ext.php?oid=183231915&amp;id=166697716&amp;hash=dad7aec1391585ea&amp;hd=2" width="607" height="360" frameborder="0"&gt;&lt;/iframe&gt;</div>
 		</div><!-- control group -->
 
-		<? if ($video['method']): ?>
 		<div class="form_group">
 			<label class="form_group_label" for="add_field_name">Название видео</label>
 			<div class="form_group_controls span8">
-				<input type="text" name="title" placeholder="" id="add_field_name" value="<?= $video['title'] ?>" required>
+				<input type="text" name="title" placeholder="" id="add_field_name" value="" required>
 			</div>
 		</div><!-- control group -->
 		<div class="form_group">
@@ -70,21 +72,13 @@
 			</div>
 		</div><!-- control group -->
 
-		<?= $video['preview'] ? '<img src="'.$video['preview'].'"><input type="hidden" name="img_preview" value="'.$video['preview'].'">' : '' ?>
-		<?= $video['method'] ? '<input type="hidden" name="method" value="'.$video['method'].'">' : '' ?>
-	    <?= $video['duration'] ? '<input type="hidden" name="duration" value="'.$video['duration'].'">' : '' ?>
-		
-		<? endif; ?>
-
 		<div class="form_group state_hide">
 			<div class="form_group_label">Миниатюра</div>
 			<div class="form_group_controls">
-				<div class="post_item">
+				<div class="post_item post_item_preview">
 					<div class="post_item_image">
-						<a href="#" class="fa fa-play">
-							<img src="img/video_empty.png" id="add_field_image" alt="">
-							<div class="post_item_duration" id="add_field_duration">00:00</div>
-						</a>
+						<img src="img/video_empty.png" id="add_field_image" alt="">
+						<div class="post_item_duration" id="add_field_duration">00:00</div>
 					</div>
 				</div><!-- post item -->
 			</div>

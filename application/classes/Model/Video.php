@@ -237,15 +237,7 @@ class Model_Video extends Model
                         }
                     }
                 }
-
                 
-                /*
-                if ($q['duration'] != '0') {
-                    $q['duration'] = sprintf("%02d:%02d:%02d", (int)($q['duration'] / 3600), (int)(($q['duration'] % 3600) / 60), $q['duration'] % 60);
-                }
-                */
-
-
                 return $q;
             }
             

@@ -120,7 +120,7 @@ class Controller_Video extends Controller_Base_preDispatch
             $this->view['video']['actors'] = '';
             $this->view['video']['tags']='';
             $this->view['video']['duration']='';
-            $this->view['video']['method'] = false;
+            $this->view['video']['method'] = '';
 
             # vk api
             $data['client_id'] = '3980223';
@@ -137,11 +137,11 @@ class Controller_Video extends Controller_Base_preDispatch
             $tags   = (string) Arr::get($_POST, 'tags', '');
             #$ajax   = (bool) Arr::get($_POST, 'ajax', false);
             $img_preview = (string) Arr::get($_POST, 'img_preview', '');
-            $method = (string) Arr::get($_POST, 'method', '');
+            $method = (string) Arr::get($_POST, 'method', ''); #save, checkUrl
             $duration = (string)    Arr::get($_POST, 'duration', '');
 
             
-
+            /*
             if ( $method == 'save' && Security::check( $csrf ) ) {
                 $actors = explode(',', $actors);
                 $tags   = explode(',', $tags);
@@ -154,15 +154,13 @@ class Controller_Video extends Controller_Base_preDispatch
                 if ($status) $this->redirect();
                 else die('add_error');
             }
-
+            */
 
 
             # user add video by url
             if ($url) {
 
                 if ( Security::check( $csrf ) ) {
-
-                    $url_title = URL::title( $title );
 
                     # check url
                     $pattern_iframe = '/http(s?):\/\/vk.com\/[A-Za-z_.?]*oid=([-\d]*)?&id=([\d]*)?(&hash=[A-Za-z\d]*)?(&hd=[\d])?/';
@@ -196,28 +194,49 @@ class Controller_Video extends Controller_Base_preDispatch
                             'videos'     => $data['uid'].'_'.$data['vid'],
                         ));
 
+                        # duration format
+                        $hours = (int)($video_info['response'][1]['duration'] / 3600);
+                        $minuts = (int)(($video_info['response'][1]['duration'] % 3600) / 60);
+                        $seconds = $video_info['response'][1]['duration'] % 60;
+
+                        if ( $hours ) $duration = sprintf("%02d:%02d:%02d", $hours, $minuts, $seconds);
+                        else $duration = sprintf("%02d:%02d", $minuts, $seconds);
+                
+                        $video_info['response'][1]['duration'] = $duration;
 
                         if ( $method == 'checkUrl' ) {
                             $video_info['response'][1]['status'] = true;
+                            $video_info['response'][1]['url'] = $url;
+                            $video_info['response'][1]['method'] = $method;
 
                             $data = json_encode($video_info['response'][1]);
+
                             echo $data;
                             exit();
                         }
+
+                        if ( $method == 'save' && Security::check( $csrf ) ) {
+
+                            $url_title      = URL::title($title);
+                            $url            = $video_info['response'][1]['player'];
+                            $title          = $video_info['response'][1]['title'];
+                            $img_preview    = $video_info['response'][1]['image_medium'];
+                            $actors         = explode(',', $actors);
+                            $tags           = explode(',', $tags);
+
+                            $video = new Model_Video();
+                            $status = $video->save($url, $title, $url_title, $studio, $cat, $actors, $tags, $img_preview, $duration);
+
+                            if ($status) $this->redirect();
+                            else die('add_error');
+                        }
+                        /*
                         else {
                             # go to /add page and put info in fields
                             $this->view['video']['url'] = $video_info['response'][1]['player'];
                             $this->view['video']['title'] = $video_info['response'][1]['title'];
                             $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-
-                            if ($video_info['response'][1]['duration'] != '0') {
-                                $this->view['video']['duration'] = sprintf("%02d:%02d:%02d", (int)($video_info['response'][1]['duration'] / 3600), (int)(($video_info['response'][1]['duration'] % 3600) / 60), $video_info['response'][1]['duration'] % 60);
-                            }
-                            else {
-                                $video_info['response'][1]['duration'] = '0';
-                            }
-
-                            #$this->view['video']['duration'] = $video_info['response'][1]['duration'];
+                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
                             $this->view['video']['actors'] = $actors;
                             $this->view['video']['tags'] = $tags;
 
@@ -227,13 +246,14 @@ class Controller_Video extends Controller_Base_preDispatch
 
                             return;
                         }
+                        */
 
                     }
 
 
                     $status = preg_match($pattern_normal, $url, $matches);
 
-                    elseif ( $status ) {
+                    if ( $status ) {
 
                         # auto form array from parameters
                         $count  = count($matches);
@@ -254,6 +274,15 @@ class Controller_Video extends Controller_Base_preDispatch
                             'videos'     => $data['uid'].'_'.$data['vid'],
                         ));
 
+                        # duration format
+                        $hours = (int)($video_info['response'][1]['duration'] / 3600);
+                        $minuts = (int)(($video_info['response'][1]['duration'] % 3600) / 60);
+                        $seconds = $video_info['response'][1]['duration'] % 60;
+
+                        if ( $hours ) $duration = sprintf("%02d:%02d:%02d", $hours, $minuts, $seconds);
+                        else $duration = sprintf("%02d:%02d", $minuts, $seconds);
+
+
                         if ( $method == 'checkUrl' ) {
                             $video_info['response'][1]['status'] = true;
 
@@ -261,20 +290,29 @@ class Controller_Video extends Controller_Base_preDispatch
                             echo $data;
                             exit();
                         }
+
+                        if ( $method == 'save' && Security::check( $csrf ) ) {
+
+                            $url_title      = URL::title($title);
+                            $url            = $video_info['response'][1]['player'];
+                            $title          = $video_info['response'][1]['title'];
+                            $img_preview    = $video_info['response'][1]['image_medium'];
+                            $actors         = explode(',', $actors);
+                            $tags           = explode(',', $tags);
+
+                            $video = new Model_Video();
+                            $status = $video->save($url, $title, $url_title, $studio, $cat, $actors, $tags, $img_preview, $duration);
+
+                            if ($status) $this->redirect();
+                            else die('add_error');
+                        }
+                        /*
                         else {
                             # go to /add page and put info in fields
                             $this->view['video']['url'] = $video_info['response'][1]['player'];
                             $this->view['video']['title'] = $video_info['response'][1]['title'];
                             $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-                            #$this->view['video']['duration'] = $video_info['response'][1]['duration'];
-                            
-                            if ($video_info['response'][1]['duration'] != '0') {
-                                $this->view['video']['duration'] = sprintf("%02d:%02d:%02d", (int)($video_info['response'][1]['duration'] / 3600), (int)(($video_info['response'][1]['duration'] % 3600) / 60), $video_info['response'][1]['duration'] % 60);
-                            }
-                            else {
-                                $video_info['response'][1]['duration'] = '0';
-                            }
-
+                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
                             $this->view['video']['actors'] = $actors;
                             $this->view['video']['tags'] = $tags;
 
@@ -282,17 +320,17 @@ class Controller_Video extends Controller_Base_preDispatch
                             $this->template->content = View::factory('templates/add', $this->view);
                             
                             return;
-                        }                    
+                        }
+                        */                  
                     }
 
                     if (!$status && $method == 'checkUrl' ) {
                         $video_info['response'][1]['status'] = false;
+
                         $data = json_encode($video_info['response'][1]);
                         echo $data;
                         exit();
-                    }
-
-                    
+                    }     
 
                 }
             }
