@@ -1,15 +1,5 @@
-$(function(){
-	$.video();
-})
-
 $.video = function(){
 	var self = this;
-
-	$(".video_field_checkurl").unbind('keypress paste').on({
-		'keypress paste': function(){
-			self.checkUrl($(this).val());
-		}
-	})
 
 	self.checkUrl = function(value){
 		$.ajax({
