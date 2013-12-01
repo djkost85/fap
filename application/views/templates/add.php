@@ -4,7 +4,7 @@
 <div class="page_body">
 	<form class="form" action="/add" method="post">
 
-		<script src="js/video.js"></script>
+		<script src="/public/js/video.js"></script>
 		<script>
 
 			$(function(){
