@@ -8,9 +8,13 @@
 		<script>
 
 			$(function(){
+
+				var video = new Video();
+
 				$("#add_field_url").unbind('keypress paste').on({
-					'keypress paste': function(){
-						$.video().checkUrl($(this).val());
+					'keyup paste': function(){
+						var obj = $(this);
+						video.checkUrl(obj.val());
 					}
 				})
 			})

@@ -1,15 +1,21 @@
-$.video = function(){
+function Video(){
 	var self = this;
+};
 
-	self.checkUrl = function(value){
+Video.prototype = {
+	checkUrl: function(value){
+
 		$.ajax({
 			url: '/add',
 			data: {
 				'url': value,
 				'method': 'checkUrl'
 			},
-			dataType: 'json'
+			dataType: 'json',
 			success: function(data){
+				
+				console.log(data);
+
 				if(data.status) {
 					$(".video_field_name").val(data.name);
 					$(".video_field_image").attr('src', data.image);
@@ -17,4 +23,4 @@ $.video = function(){
 			}
 		})
 	}
-};
+}
