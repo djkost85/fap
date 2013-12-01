@@ -8,7 +8,7 @@
 		<script>
 
 			$(function(){
-				$(".video_field_checkurl").unbind('keypress paste').on({
+				$("#add_field_url").unbind('keypress paste').on({
 					'keypress paste': function(){
 						$.video().checkUrl($(this).val());
 					}
