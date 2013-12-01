@@ -98,9 +98,19 @@
 				var video = new Video();
 
 				$("#add_field_url").unbind('keypress paste').on({
-					'keyup paste': function(){
+					'input paste blur': function(){
 						var obj = $(this);
 						video.checkUrl(obj.val(), '<?= Security::token(); ?>');
+					},
+					'keypress': function(e){
+						var code = (e.keyCode ? e.keyCode : e.which);
+						if(code == 13) {
+							var obj = $(this);
+							video.checkUrl(obj.val(), '<?= Security::token(); ?>');
+
+							return false;
+						}
+					
 					}
 				})
 			})

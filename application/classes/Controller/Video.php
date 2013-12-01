@@ -1,8 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Work with videos :D
+ * @author Alexander Demyashev
+ * @license OpenSource
+ */
+
 class Controller_Video extends Controller_Base_preDispatch
 {
-    # default index page
+    /**
+     * Show videos on index
+     */
     public function action_index()
     {
         $videos = new Model_Video();
@@ -13,7 +21,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/index', $this->view);
     }
 
-    # show studio's videos
+    /**
+     * Show videos categored by studio
+     */
     public function action_studio()
     {
         # factory
@@ -43,7 +53,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/view_condition', $this->view);
     }
 
-    # show videos by category
+    /**
+     * Show videos categored by category...wat
+     */
     public function action_category()
     {
         # factory
@@ -73,6 +85,9 @@ class Controller_Video extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/view_condition', $this->view);
     }
 
+    /**
+     * Show single video
+     */
     public function action_view()
     {
         $this->view['videos_error'] = false;
@@ -93,7 +108,7 @@ class Controller_Video extends Controller_Base_preDispatch
         else {
             $Tweak = new Model_Tweak();
 
-            $video['date']   = nl2br($Tweak->rusDate("j M Y", strtotime( $video['date'] ) ));
+            $video['date'] = $Tweak->ftime( strtotime($video['date']) );
             $this->view['video'] = $video;
             
         }
@@ -102,6 +117,10 @@ class Controller_Video extends Controller_Base_preDispatch
         
     }
 
+    /**
+     * if js is on, check video_url, use vk.com api video.get, save him to db
+     * else work php and do all same
+     */
     public function action_add()
     {
         # show search widget in sidebar
@@ -135,26 +154,10 @@ class Controller_Video extends Controller_Base_preDispatch
             $cat    = (int)    Arr::get($_POST, 'cat', '');
             $actors = (string) Arr::get($_POST, 'actors', '');
             $tags   = (string) Arr::get($_POST, 'tags', '');
-            #$ajax   = (bool) Arr::get($_POST, 'ajax', false);
             $img_preview = (string) Arr::get($_POST, 'img_preview', '');
             $method = (string) Arr::get($_POST, 'method', ''); #save, checkUrl
             $duration = (string)    Arr::get($_POST, 'duration', '');
 
-            
-            /*
-            if ( $method == 'save' && Security::check( $csrf ) ) {
-                $actors = explode(',', $actors);
-                $tags   = explode(',', $tags);
-
-                $url_title = URL::title($title);
-
-                $video = new Model_Video();
-                $status = $video->save($url, $title, $url_title, $studio, $cat, $actors, $tags, $img_preview, $duration);
-
-                if ($status) $this->redirect();
-                else die('add_error');
-            }
-            */
 
 
             # user add video by url
@@ -217,9 +220,9 @@ class Controller_Video extends Controller_Base_preDispatch
 
                         if ( $method == 'save' && Security::check( $csrf ) ) {
 
-                            $url_title      = URL::title($title);
                             $url            = $video_info['response'][1]['player'];
-                            $title          = $video_info['response'][1]['title'];
+                            $title ? $title : $video_info['response'][1]['title'];
+                            $url_title      = URL::title($title);
                             $img_preview    = $video_info['response'][1]['image_medium'];
                             $actors         = explode(',', $actors);
                             $tags           = explode(',', $tags);
@@ -230,23 +233,6 @@ class Controller_Video extends Controller_Base_preDispatch
                             if ($status) $this->redirect();
                             else die('add_error');
                         }
-                        /*
-                        else {
-                            # go to /add page and put info in fields
-                            $this->view['video']['url'] = $video_info['response'][1]['player'];
-                            $this->view['video']['title'] = $video_info['response'][1]['title'];
-                            $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
-                            $this->view['video']['actors'] = $actors;
-                            $this->view['video']['tags'] = $tags;
-
-                            $this->view['video']['method'] = 'save';
-
-                            $this->template->content = View::factory('templates/add', $this->view);
-
-                            return;
-                        }
-                        */
 
                     }
 
@@ -293,9 +279,9 @@ class Controller_Video extends Controller_Base_preDispatch
 
                         if ( $method == 'save' && Security::check( $csrf ) ) {
 
-                            $url_title      = URL::title($title);
                             $url            = $video_info['response'][1]['player'];
-                            $title          = $video_info['response'][1]['title'];
+                            $title ? $title : $video_info['response'][1]['title'];
+                            $url_title      = URL::title($title);
                             $img_preview    = $video_info['response'][1]['image_medium'];
                             $actors         = explode(',', $actors);
                             $tags           = explode(',', $tags);
@@ -306,22 +292,7 @@ class Controller_Video extends Controller_Base_preDispatch
                             if ($status) $this->redirect();
                             else die('add_error');
                         }
-                        /*
-                        else {
-                            # go to /add page and put info in fields
-                            $this->view['video']['url'] = $video_info['response'][1]['player'];
-                            $this->view['video']['title'] = $video_info['response'][1]['title'];
-                            $this->view['video']['preview'] = $video_info['response'][1]['image_medium'];
-                            $this->view['video']['duration'] = $video_info['response'][1]['duration'];
-                            $this->view['video']['actors'] = $actors;
-                            $this->view['video']['tags'] = $tags;
-
-                            $this->view['video']['method'] = 'save';
-                            $this->template->content = View::factory('templates/add', $this->view);
-                            
-                            return;
-                        }
-                        */                  
+              
                     }
 
                     if (!$status && $method == 'checkUrl' ) {

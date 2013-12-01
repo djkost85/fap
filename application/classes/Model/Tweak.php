@@ -1,8 +1,21 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Some tweaks
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Model_Tweak extends Model
 {
-    # by Petr Savchenko
+    /**
+     * Returns the elapsed time from a certain point
+     *
+     * @author  Petr Savchenko
+     * @param   string  $timestamp
+     * @param   string  $date
+     * @return  string
+     */
     public function ftime($timestamp, $long = false)
     {
         $time = time() - $timestamp;
@@ -22,7 +35,14 @@ class Model_Tweak extends Model
         }
     }
 
-    # by Petr Savchenko
+    /**
+     * Converts a date with En to Ru
+     *
+     * @author  Petr Savchenko
+     * @param   string  $timestamp
+     * @param   string  $date
+     * @return  string
+     */
     public function rusDate()
     {
         $translate = array(
@@ -82,7 +102,16 @@ class Model_Tweak extends Model
         }
     }
 
-    # by Petr Savchenko
+    /**
+     * Determining date ending
+     * Used for method ftime()
+     *
+     * @author  Petr Savchenko
+     * @param   integer $num
+     * @param   string  $nominative
+     * @param   string  $genitive_singular
+     * @param   tring   $genitive_plural
+     */
     public function num_decline($num, $nominative, $genitive_singular, $genitive_plural)
     {
         if($num > 10 && ( floor(($num % 100) / 10) )  == 1){

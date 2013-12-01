@@ -1,7 +1,18 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Methods for work with videos
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Model_Video extends Model
 {
+    /**
+     * Get all studios from db
+     *
+     * @return  array
+     */
     public function getStudios()
     {   
         $studios = Kohana::cache('studios');
@@ -20,6 +31,11 @@ class Model_Video extends Model
         }
     }
 
+    /**
+     * Get all categories from db
+     *
+     * @return  array
+     */
     public function getCats()
     {
         $categories = Kohana::cache('categories');
@@ -38,6 +54,11 @@ class Model_Video extends Model
         }
     }
 
+    /**
+     * Get all tags from db
+     *
+     * @return  array
+     */
     public function getTags()
     {
         $tags = Kohana::cache('tags');
@@ -56,6 +77,11 @@ class Model_Video extends Model
         }
     }
 
+    /**
+     * Get all actors from db
+     *
+     * @return  array
+     */
     public function getActors() 
     {
         $actors = Kohana::cache('actors');
@@ -74,21 +100,29 @@ class Model_Video extends Model
         }
     }
 
+    /**
+     * Get all videos by condition (where, parameter)
+     *
+     * @param   array   $condition
+     * @return  array
+     */
     public function getAllVideos( $condition = false )
     {
         $VideosByOneDay = Kohana::cache('VideosByOneDay');
 
+        $Tweak = new Model_Tweak();
+
         #if (!$VideosByOneDay) {
 
             if (!$condition) {
-                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview', 'duration', 'views')
+                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview', 'duration', 'views', 'date')
                 ->from('videos')
                 ->order_by('date', 'desc')
                 ->execute()
                 ->as_array();
             }
             else {
-                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview', 'duration', 'views')
+                $q = DB::select('id', 'title', 'url', 'actors', 'cat', 'likes', 'url_title', 'img_preview', 'duration', 'views', 'date')
                     ->from('videos')
                     ->where($condition['where'], '=', $condition['parameter'])
                     ->order_by('date', 'desc')
@@ -105,6 +139,10 @@ class Model_Video extends Model
                 # add cat name by cat_id
                 $count = 0;
                 foreach ($q as $video)  {
+
+                $video['date'] = $Tweak->ftime( strtotime($video['date']) );
+
+
                     foreach ($cats as $cat) {
 
                         if ( $video['cat'] == $cat['id'] ) {
@@ -144,6 +182,7 @@ class Model_Video extends Model
                             }
                         }
 
+
                     }
 
                     $row[$count] = $video;
@@ -160,6 +199,12 @@ class Model_Video extends Model
 
     }
 
+    /**
+     * Get one video by him title
+     *
+     * @param   string  $url_title
+     * @return  array
+     */
     public function getVideoByTitle( $url_title = false )
     {
         $url_title = (string) $url_title;
@@ -246,6 +291,12 @@ class Model_Video extends Model
         
     }
 
+    /**
+     * Swap studio's name to him id
+     *
+     * @param   string  $name
+     * @return  integer
+     */
     public function getStudioIdByName($name = false)
     {
         if (!$name) {
@@ -264,6 +315,12 @@ class Model_Video extends Model
         
     }
 
+    /**
+     * Swap category's name by him id
+     *
+     * @param   string  $name
+     * @return  integer
+     */
     public function getCategoryIdByName( $name = false )
     {
         if (!$name) {
@@ -281,6 +338,20 @@ class Model_Video extends Model
         }
     }
 
+    /**
+     * Save video in db
+     *
+     * @param    string  $url
+     * @param    string  $title
+     * @param    string  $url_title
+     * @param    integer $studio
+     * @param    integer $cat
+     * @param    array   $actors
+     * @param    array   $tags
+     * @param    string  $img_preview
+     * @param    string  $duration
+     * @return   bool
+     */
     public function save($url, $title, $url_title, $studio, $cat, $actors, $tags, $img_preview, $duration) {
         #$actors = serialize($actors);
         #$tags = serialize($tags);

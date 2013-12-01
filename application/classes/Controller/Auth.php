@@ -1,8 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Authenticate users
+ * @author  Alexander Demyashev <daseemux@gmail.com>
+ * @license OpenSource
+ */
+
 class Controller_Auth extends Controller_Base_preDispatch
 {
-
+    /**
+     * Load auth page, add black page backgroud
+     */
     public function action_index()
     {
         # show search widget in sidebar
@@ -11,14 +19,20 @@ class Controller_Auth extends Controller_Base_preDispatch
         $this->template->content = View::factory('templates/auth', $this->view);
     }
 
+    /**
+     * Logout: delete pechen'ki and redirext to index
+     */
     public function action_logout()
     {
         Cookie::delete('uid');
         Cookie::delete('hr');
-        $this->redirect('');
+        $this->redirect();
     }
 
-
+    /**
+     * Authenticate users through vk.com api
+     * @throws  Exception
+     */
     public function action_loginVk()
     {
         $this->view['login_error']      = false;
@@ -45,19 +59,9 @@ class Controller_Auth extends Controller_Base_preDispatch
                 'fields'    => 'id,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo_50,photo_100,photo_200,photo_200_orig,photo_400_orig,photo_max,photo_max_orig',
                 'order'     => 'name'
             ));
-            #var_dump($access_token['user_id']);
-            #var_dump($user_info);
-            #exit();
-
 
             $data = current( $user_info['response'] );
-
-            
-            
             $data['access_token'] = $access_token['access_token'];
-
-            #var_dump($data['access_token']);
-            #exit();
 
             # Если в базе нет вообще, добавляем
             if ($user = $this->user->hasUniqueUsername( $data['uid'] )) {
@@ -65,7 +69,6 @@ class Controller_Auth extends Controller_Base_preDispatch
                 if ($new_user_id = $this->user->insertNewUser( $data )) {
 
                     $this->user->setAuthCookie($new_user_id);
-
                     $this->user->saveImgs($new_user_id, $data['photo_50'] );
 
                     $images = array(
@@ -86,10 +89,7 @@ class Controller_Auth extends Controller_Base_preDispatch
                 # Обновить аву, если уже зарегистрирован
                 if ( $user = $this->user->getUserForLogin($data['uid']) ){
                     $this->user->setAuthCookie($user['id']);
-
                     $this->user->updateToken($user['id'], $data['access_token'] );
-
-
                     $this->user->saveImgs( $user['id'], $data['photo_50'] );
 
                     $images = array(
@@ -109,14 +109,12 @@ class Controller_Auth extends Controller_Base_preDispatch
 
         }
 
-
         if ( Arr::get($_GET, 'error') ){
             $error             = (string) Arr::get($_GET, 'error', '');
             $error_reason      = (string) Arr::get($_GET, 'error_reason', '');
             $error_description = (string) Arr::get($_GET, 'error_description', '');
 
-            echo $error.'-'.$error_reason.'-'.$error_description;
-            die();
+            throw new Exception($error.'-'.$error_reason.'-'.$error_description);
         }
         
     }

@@ -1,9 +1,25 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * The PHP class for Like/Dislike vk.com api
+ * @author Alexander Demyashev
+ * @license OpenSource
+ */
+
 class Controller_Like extends Controller_Template
 {
+    /**
+     * Name of basic template
+     * @var string
+     */
     public $template = 'ajax';
 
+    /**
+     * if user allow js and post ajax - return json data
+     * else work php and redirect to index
+     *
+     * @return  json
+     */
     public function action_index()
     {
         $uid  = (int) Arr::get($_GET, 'uid', 0);
