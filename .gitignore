@@ -1,0 +1,10 @@
+application/cache/*
+application/logs/*
+.DS_Store
+sftp-config.json
+.idea/.name
+*.xml
+*.iml
+*.sublime-project
+*.sublime-workspace
+.htaccess
