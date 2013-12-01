@@ -4,6 +4,19 @@
 <div class="page_body">
 	<form class="form" action="/add" method="post">
 
+		<script src="js/video.js"></script>
+		<script>
+
+			$(function(){
+				$(".video_field_checkurl").unbind('keypress paste').on({
+					'keypress paste': function(){
+						$.video().checkUrl($(this).val());
+					}
+				})
+			})
+
+		</script>
+
 		<div class="form_group form_group_featured">
 			<label class="form_group_label" for="add_field_url">Ссылка видео в Вконтакте</label>
 			<div class="form_group_controls span8">
