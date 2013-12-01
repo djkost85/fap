@@ -198,6 +198,8 @@ class Controller_Video extends Controller_Base_preDispatch
 
 
                         if ( $method == 'checkUrl' ) {
+                            $video_info['response'][1]['status'] = true;
+
                             $data = json_encode($video_info['response'][1]);
                             echo $data;
                             exit();
@@ -253,6 +255,8 @@ class Controller_Video extends Controller_Base_preDispatch
                         ));
 
                         if ( $method == 'checkUrl' ) {
+                            $video_info['response'][1]['status'] = true;
+
                             $data = json_encode($video_info['response'][1]);
                             echo $data;
                             exit();
@@ -279,6 +283,13 @@ class Controller_Video extends Controller_Base_preDispatch
                             
                             return;
                         }                    
+                    }
+
+                    if (!$status && $method == 'checkUrl' ) {
+                        $video_info['response'][1]['status'] = false;
+                        $data = json_encode($video_info['response'][1]);
+                        echo $data;
+                        exit();
                     }
 
                     
