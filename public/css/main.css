@@ -225,3 +225,6 @@
 .state_be_removed:hover:after {
 	opacity: 0.8;
 }
+.state_hide {
+	display: none;
+}

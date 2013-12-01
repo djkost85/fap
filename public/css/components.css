@@ -192,6 +192,12 @@
 		position: relative;
 		margin: 0 0 0 20px;
 	}
+	.post_item_preview {
+		height: auto;
+
+		margin: 0;
+		float: none;
+	}
 		.post_item_image {
 			height: 130px;
 

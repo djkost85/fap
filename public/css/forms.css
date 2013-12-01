@@ -110,6 +110,10 @@ input.state_focus,
 		.form_group .form_group_controls {
 			position: relative;
 		}
+			.form_group_status {
+				position: absolute;
+				top: 12px; right: -20px;
+			}
 		.form_group_descript {
 			margin-top: 10px;
 

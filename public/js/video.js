@@ -15,12 +15,12 @@ Video.prototype = {
 				'csrf': csrf
 			},
 			success: function(data){
-				
-				console.log(data);
-
 				if(data.status) {
-					$(".video_field_name").val(data.name);
-					$(".video_field_image").attr('src', data.image);
+					$("#add_field_name").val(data.name);
+					$("#add_field_image").attr('src', data.photo_320);
+					$("#add_field_duration").val(data.duration);
+
+					$(".form_group").removeClass("state_hide");
 				}
 			}
 		})
