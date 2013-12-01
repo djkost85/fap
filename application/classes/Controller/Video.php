@@ -233,7 +233,7 @@ class Controller_Video extends Controller_Base_preDispatch
 
                     $status = preg_match($pattern_normal, $url, $matches);
 
-                    if ( $status ) {
+                    elseif ( $status ) {
 
                         # auto form array from parameters
                         $count  = count($matches);
