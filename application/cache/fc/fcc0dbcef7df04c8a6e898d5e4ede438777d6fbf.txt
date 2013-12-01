@@ -1,1 +1,0 @@
-a:3:{i:0;a:2:{s:2:"id";s:1:"1";s:4:"name";s:5:"Stoya";}i:1;a:2:{s:2:"id";s:1:"2";s:4:"name";s:10:"Sasha Grey";}i:2;a:2:{s:2:"id";s:1:"3";s:4:"name";s:9:"Asa Akira";}}
