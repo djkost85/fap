@@ -61,7 +61,7 @@
 				<div class="widget widget_noborder widget_nav toggle">
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($studios as $studio): ?>
-							<li class='<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "state_active" : ""  ?> <? $i > 9 ? "toggle_item" : ""?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
+							<li class='<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "state_active" : ""  ?> <?if($i > 9) echo "toggle_item" ?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
 					<?if($i>9){?>
@@ -73,7 +73,7 @@
 				<div class="widget widget_cats toggle">
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($cats as $cat): ?>
-							<li class='<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "state_active" : ""  ?> <? $i > 9 ? "toggle_item" : ""?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "/" : "/category/".$cat['name'] ?>"><?= $cat['name'] ?></a></li>
+							<li class='<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "state_active" : ""  ?> <?if($i > 9) echo "toggle_item" ?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "/" : "/category/".$cat['name'] ?>"><?= $cat['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
 					<?if($i>9){?>
@@ -85,7 +85,7 @@
 				<div class="widget widget_tags toggle">
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($tags as $tag): ?>
-							<li class="<? $i > 9 ? "toggle_item" : ""?>"><a href="#" class="tag"><?= $tag['name'] ?></a></li>
+							<li class="<?if($i > 9) echo "toggle_item" ?>"><a href="#" class="tag"><?= $tag['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
 					<?if($i>9){?>

@@ -259,6 +259,7 @@ $.fn.toggle = function(){
 				open.text(self.opts.hideText);
 			}
 
+			return false;
 		})
 	});
 };
