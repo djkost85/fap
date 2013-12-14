@@ -464,3 +464,53 @@
 		margin: 0 0 0 2px;
 		font-size: 11px;
 	}
+
+/* toggle */
+
+.toggle {
+	position: relative;
+}
+	.toggle_outer {
+		overflow: hidden;
+
+		-webkit-transition: 0.3s ease;
+		-moz-transition: 0.3s ease;
+		-ms-transition: 0.3s ease;
+		-o-transition: 0.3s ease;
+		transition: 0.3s ease;
+	}
+		.toggle .toggle_item {
+			display: none;
+		}
+		.toggle.state_open .toggle_item {
+			display: inline-block;
+		}
+	.toggle_open {
+		margin: 0 -15px;
+	}
+		.toggle_open a {
+			background: #111;
+			border-bottom: none;
+			display: block;
+
+			-webkit-box-shadow: 0 -1px 1px #111;
+			-moz-box-shadow: 0 -1px 1px #111;
+			box-shadow: 0 -1px 1px #111;
+
+			padding: 6px;
+			position: relative;
+			top: 10px;
+
+			font-size: 12px;
+			font-weight: 300;
+			line-height: 18px;
+			text-align: center;
+		}
+		.toggle_open a:hover {
+			background: #000;
+			border-bottom: none;
+
+			-webkit-box-shadow: 0 -1px 1px #000;
+			-moz-box-shadow: 0 -1px 1px #000;
+			box-shadow: 0 -1px 1px #000;
+		}

@@ -27,7 +27,7 @@
 		<div class="layout">
 			<div class="logo">
 				<a href="/">
-					<span>fapalo</span>
+					<span>fapallo</span>
 				</a>
 			</div>
 			<div class="sidebar">
@@ -58,27 +58,41 @@
 				</div>
 				<? endif;?>
 
-				<div class="widget widget_noborder widget_nav">
-					<ul>
-						<? foreach ($studios as $studio): ?>
-							<li <?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "class='state_active'" : ""  ?>><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
-						<? endforeach; ?>
+				<div class="widget widget_noborder widget_nav toggle">
+					<ul class="toggle_wrap">
+						<? $i=0; foreach ($studios as $studio): ?>
+							<li class='<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "state_active" : ""  ?> <? $i > 9 ? "toggle_item" : ""?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
+						<? $i++; endforeach; ?>
 					</ul>
+					<?if($i>9){?>
+						<div class="toggle_open">
+							<a href="#">показать еще</a>
+						</div>
+					<?}?>
 				</div><!-- widget nav -->
-				<div class="widget widget_cats">
-					<ul>
-						<? foreach ($cats as $cat): ?>
-							<li <?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "class='state_active'" : ""  ?>><a href="<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "/" : "/category/".$cat['name'] ?>"><?= $cat['name'] ?></a></li>
-						<? endforeach; ?>   
+				<div class="widget widget_cats toggle">
+					<ul class="toggle_wrap">
+						<? $i=0; foreach ($cats as $cat): ?>
+							<li class='<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "state_active" : ""  ?> <? $i > 9 ? "toggle_item" : ""?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "/" : "/category/".$cat['name'] ?>"><?= $cat['name'] ?></a></li>
+						<? $i++; endforeach; ?>
 					</ul>
+					<?if($i>9){?>
+						<div class="toggle_open">
+							<a href="#">показать еще</a>
+						</div>
+					<?}?>
 				</div><!-- widget cats -->
-				<div class="widget widget_tags">
-					<ul>
-						<!-- <li class="state_active"><a href="#" class="tag">blonde</a></li> -->
-						<? foreach ($tags as $tag): ?>
-							<li><a href="#" class="tag"><?= $tag['name'] ?></a></li>
-						<? endforeach; ?>  
+				<div class="widget widget_tags toggle">
+					<ul class="toggle_wrap">
+						<? $i=0; foreach ($tags as $tag): ?>
+							<li class="<? $i > 9 ? "toggle_item" : ""?>"><a href="#" class="tag"><?= $tag['name'] ?></a></li>
+						<? $i++; endforeach; ?>
 					</ul>
+					<?if($i>9){?>
+						<div class="toggle_open">
+							<a href="#">показать еще</a>
+						</div>
+					<?}?>
 				</div><!-- widget tags -->
 				<? if ( $user->id == 0 ): ?>
 				<div class="widget">

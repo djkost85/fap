@@ -221,4 +221,44 @@ $.fn.fieldState = function(){
 			}
 		})
 	})
-}
+};
+
+$.fn.toggle = function(){
+	return this.each(function(){
+		var self = $(this);
+		var open = $(".toggle_open a", self);
+		var wrap = $(".toggle_wrap", self);
+		var items = $(".toggle_item", self);
+
+		self.opts = {
+			showText: "показать еще",
+			hideText: "скрыть"
+		}
+
+		open.on('click', function(){
+			if(self.hasClass("state_open")) {
+
+				wrap.parent().height(self.wrapHeight);
+
+				setTimeout(function(){
+					self.removeClass("state_open");
+				}, 300)
+				
+				open.text(self.opts.showText);
+				
+			} else {
+
+				self.wrapHeight = wrap.height();
+				if(!wrap.parent(".toggle_outer").length > 0) wrap.wrap("<div class='toggle_outer'></div>");
+				wrap.parent().height(self.wrapHeight);
+
+				self.addClass("state_open");
+				items.show();
+
+				wrap.parent().height(wrap.height());
+				open.text(self.opts.hideText);
+			}
+
+		})
+	});
+};
