@@ -69,7 +69,7 @@ class Controller_Auth extends Controller_Base_preDispatch
                 if ($new_user_id = $this->user->insertNewUser( $data )) {
 
                     $this->user->setAuthCookie($new_user_id);
-                    $this->user->saveImgs($new_user_id, $data['photo_50'] );
+                    $this->user->saveImgs($new_user_id, $data );
 
                     $images = array(
                         'photo_50'       => $data['photo_50'],
@@ -90,7 +90,7 @@ class Controller_Auth extends Controller_Base_preDispatch
                 if ( $user = $this->user->getUserForLogin($data['uid']) ){
                     $this->user->setAuthCookie($user['id']);
                     $this->user->updateToken($user['id'], $data['access_token'] );
-                    $this->user->saveImgs( $user['id'], $data['photo_50'] );
+                    $this->user->saveImgs( $user['id'], $data );
 
                     $images = array(
                         'photo_50'       => $data['photo_50'],

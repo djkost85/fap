@@ -198,8 +198,8 @@ class Model_User extends Model
         $path_50  = './public/img/user/'.$id.'_50x50.jpg';
         $path_200 = './public/img/user/'.$id.'_200x200.jpg';
 
-        $save_50  = file_put_contents($path_50, file_get_contents($image));
-        $save_200 = file_put_contents($path_200, file_get_contents($image));
+        $save_50  = file_put_contents($path_50, file_get_contents($image['photo_50']));
+        $save_200 = file_put_contents($path_200, file_get_contents($image['photo_200']));
 
         if ($save_50 && $save_200) return true;
         else return false;

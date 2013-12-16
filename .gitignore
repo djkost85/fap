@@ -1,6 +1,7 @@
 application/cache/*
 application/logs/*
 application/config/*
+public/img/user/*
 .DS_Store
 sftp-config.json
 .idea/.name
