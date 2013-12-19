@@ -58,39 +58,63 @@
 				</div>
 				<? endif;?>
 
-				<div class="widget widget_noborder widget_nav toggle">
+				<div class="widget widget_noborder widget_nav <?if(count($studios) > 9) echo 'toggle'?>">
+					<?if(count($studios) > 9){?>
+						<div class="toggle_outer">
+							<div class="toggle_inner">
+					<?}?>
+
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($studios as $studio): ?>
 							<li class='<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "state_active" : ""  ?> <?if($i > 9) echo "toggle_item" ?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/studio/'.$studio['name'] ? "/" : "/studio/".$studio['name']  ?>"><?= $studio['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
-					<?if($i>9){?>
-						<div class="toggle_open">
-							<a href="#">показать еще</a>
+					
+					<?if(count($studios) > 9){?>
+							</div>
+							<div class="toggle_open">
+								<a href="#">показать еще</a>
+							</div>
 						</div>
 					<?}?>
 				</div><!-- widget nav -->
-				<div class="widget widget_cats toggle">
+				<div class="widget widget_cats <?if(count($cats) > 9) echo 'toggle'?>">
+					<?if(count($cats) > 9){?>
+						<div class="toggle_outer">
+							<div class="toggle_inner">
+					<?}?>
+
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($cats as $cat): ?>
 							<li class='<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "state_active" : ""  ?> <?if($i > 9) echo "toggle_item" ?>'><a href="<?= $_SERVER['REQUEST_URI'] == '/category/'.$cat['name'] ? "/" : "/category/".$cat['name'] ?>"><?= $cat['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
-					<?if($i>9){?>
-						<div class="toggle_open">
-							<a href="#">показать еще</a>
+
+					<?if(count($cats) > 9){?>
+							</div>
+							<div class="toggle_open">
+								<a href="#">показать еще</a>
+							</div>
 						</div>
 					<?}?>
 				</div><!-- widget cats -->
-				<div class="widget widget_tags toggle">
+				<div class="widget widget_tags <?if(count($tags) > 9) echo 'toggle'?>">
+					<?if(count($tags) > 9){?>
+						<div class="toggle_outer">
+							<div class="toggle_inner">
+					<?}?>
+
 					<ul class="toggle_wrap">
 						<? $i=0; foreach ($tags as $tag): ?>
 							<li class="<?if($i > 9) echo "toggle_item" ?>"><a href="#" class="tag"><?= $tag['name'] ?></a></li>
 						<? $i++; endforeach; ?>
 					</ul>
-					<?if($i>9){?>
-						<div class="toggle_open">
-							<a href="#">показать еще</a>
+
+					<?if(count($tags) > 9){?>
+							</div>
+							<div class="toggle_open">
+								<a href="#">показать еще</a>
+							</div>
 						</div>
 					<?}?>
 				</div><!-- widget tags -->

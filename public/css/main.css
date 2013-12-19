@@ -50,7 +50,7 @@
 .sidebar {
 	width: 220px; height: 100%;
 
-	position: absolute;
+	position: fixed;
 	top: 0; left: 80px;
 }
 
@@ -162,11 +162,12 @@
 /* widgets */
 
 .widget {
+	background: #1f1f1f;
 	border-top: 1px solid #2b2b2b;
 
-	margin: 0 15px 15px;
-	padding: 15px 0 0;
-	position: relative;
+	margin: 0 0 15px;
+	padding: 15px 15px 0;
+	position: relative; z-index: 1;
 }
 .widget:first-child,
 .widget_noborder {

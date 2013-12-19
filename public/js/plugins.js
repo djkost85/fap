@@ -228,6 +228,7 @@ $.fn.toggle = function(){
 		var self = $(this);
 		var open = $(".toggle_open a", self);
 		var wrap = $(".toggle_wrap", self);
+		var inner = $(".toggle_inner", self);
 		var items = $(".toggle_item", self);
 
 		self.opts = {
@@ -238,25 +239,37 @@ $.fn.toggle = function(){
 		open.on('click', function(){
 			if(self.hasClass("state_open")) {
 
-				wrap.parent().height(self.wrapHeight);
+				inner.height(self.wrapHeight);
 
 				setTimeout(function(){
 					self.removeClass("state_open");
-				}, 300)
+				}, 200)
 				
 				open.text(self.opts.showText);
-				
+				self.removeClass("state_top").css({
+					top: 0,
+					height: 'auto'
+				});
 			} else {
-
 				self.wrapHeight = wrap.height();
-				if(!wrap.parent(".toggle_outer").length > 0) wrap.wrap("<div class='toggle_outer'></div>");
-				wrap.parent().height(self.wrapHeight);
+				inner.height(self.wrapHeight);
 
 				self.addClass("state_open");
 				items.show();
 
-				wrap.parent().height(wrap.height());
+				inner.height(wrap.height());
 				open.text(self.opts.hideText);
+
+				var toggleHeight = wrap.height();
+				var togglePos = self.position().top;
+				var windowHeight = $(window).height();
+
+				if(windowHeight - (toggleHeight + togglePos) < 0) {
+					self.addClass("state_top").css({
+						top: ($(".widget_userbar").length>0?80:0)-togglePos,
+						height: windowHeight-($(".widget_userbar").length>0?95:15)
+					})
+				}
 			}
 
 			return false;

@@ -468,9 +468,26 @@
 /* toggle */
 
 .toggle {
-	position: relative;
+	-webkit-transition: 0.3s ease;
+	-moz-transition: 0.3s ease;
+	-ms-transition: 0.3s ease;
+	-o-transition: 0.3s ease;
+	transition: 0.3s ease;
+
+	top: 0;
+}
+.toggle.state_open {
+	z-index: 3;
 }
 	.toggle_outer {
+		margin: 0 -15px 0;
+		padding: 0 15px 30px;
+		position: relative;
+	}
+	.toggle_inner {
+		width: 205px;
+
+		padding: 0 0 10px;
 		overflow: hidden;
 
 		-webkit-transition: 0.3s ease;
@@ -479,14 +496,22 @@
 		-o-transition: 0.3s ease;
 		transition: 0.3s ease;
 	}
-		.toggle .toggle_item {
-			display: none;
+	.toggle.state_open .toggle_inner {
+		overflow-y: auto;
+	}
+		.toggle_wrap {
+			width: 190px;
 		}
-		.toggle.state_open .toggle_item {
-			display: inline-block;
-		}
+			.toggle .toggle_item {
+				display: none;
+			}
+			.toggle.state_open .toggle_item {
+				display: inline-block;
+			}
 	.toggle_open {
-		margin: 0 -15px;
+		position: absolute;
+		left: 0; right: 0;
+		bottom: 0;
 	}
 		.toggle_open a {
 			background: #111;
@@ -498,8 +523,6 @@
 			box-shadow: 0 -1px 1px #111;
 
 			padding: 6px;
-			position: relative;
-			top: 10px;
 
 			font-size: 12px;
 			font-weight: 300;
@@ -513,4 +536,7 @@
 			-webkit-box-shadow: 0 -1px 1px #000;
 			-moz-box-shadow: 0 -1px 1px #000;
 			box-shadow: 0 -1px 1px #000;
+		}
+		.toggle.state_open .toggle_open a {
+			background: #f94f4f;
 		}
